@@ -1,0 +1,663 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\dev\betforme\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="England_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Date" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HomeTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="AwayTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FTHG" Type="integer" />
+          <Property Name="FTAG" Type="integer" />
+          <Property Name="FTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HTHG" Type="integer" />
+          <Property Name="HTAG" Type="integer" />
+          <Property Name="HTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Referee" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HS" Type="integer" />
+          <Property Name="AS" Type="integer" />
+          <Property Name="HST" Type="integer" />
+          <Property Name="AST" Type="integer" />
+          <Property Name="HF" Type="integer" />
+          <Property Name="AF" Type="integer" />
+          <Property Name="HC" Type="integer" />
+          <Property Name="AC" Type="integer" />
+          <Property Name="HY" Type="integer" />
+          <Property Name="AY" Type="integer" />
+          <Property Name="HR" Type="integer" />
+          <Property Name="AR" Type="integer" />
+          <Property Name="B365H" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="integer" />
+          <Property Name="BbMxH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="integer" />
+          <Property Name="BbMx&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="integer" />
+          <Property Name="BbAHh" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Germany_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Date" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HomeTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="AwayTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FTHG" Type="integer" />
+          <Property Name="FTAG" Type="integer" />
+          <Property Name="FTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HTHG" Type="integer" />
+          <Property Name="HTAG" Type="integer" />
+          <Property Name="HTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HS" Type="integer" />
+          <Property Name="AS" Type="integer" />
+          <Property Name="HST" Type="integer" />
+          <Property Name="AST" Type="integer" />
+          <Property Name="HF" Type="integer" />
+          <Property Name="AF" Type="integer" />
+          <Property Name="HC" Type="integer" />
+          <Property Name="AC" Type="integer" />
+          <Property Name="HY" Type="integer" />
+          <Property Name="AY" Type="integer" />
+          <Property Name="HR" Type="integer" />
+          <Property Name="AR" Type="integer" />
+          <Property Name="B365H" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="integer" />
+          <Property Name="BbMxH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="integer" />
+          <Property Name="BbMx&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="integer" />
+          <Property Name="BbAHh" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Spain_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Date" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HomeTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="AwayTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FTHG" Type="integer" />
+          <Property Name="FTAG" Type="integer" />
+          <Property Name="FTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HTHG" Type="integer" />
+          <Property Name="HTAG" Type="integer" />
+          <Property Name="HTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HS" Type="integer" />
+          <Property Name="AS" Type="integer" />
+          <Property Name="HST" Type="integer" />
+          <Property Name="AST" Type="integer" />
+          <Property Name="HF" Type="integer" />
+          <Property Name="AF" Type="integer" />
+          <Property Name="HC" Type="integer" />
+          <Property Name="AC" Type="integer" />
+          <Property Name="HY" Type="integer" />
+          <Property Name="AY" Type="integer" />
+          <Property Name="HR" Type="integer" />
+          <Property Name="AR" Type="integer" />
+          <Property Name="B365H" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="integer" />
+          <Property Name="BbMxH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="integer" />
+          <Property Name="BbMx&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&gt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv&lt;2.5" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="integer" />
+          <Property Name="BbAHh" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BetForMeDBStoreContainer">
+          <EntitySet Name="England_18_19" EntityType="Self.England_18_19" store:Type="Tables" />
+          <EntitySet Name="Germany_18_19" EntityType="Self.Germany_18_19" store:Type="Tables" />
+          <EntitySet Name="Spain_18_19" EntityType="Self.Spain_18_19" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BetForMeDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BetForMeDBContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="England_18_19" EntityType="BetForMeDB.England_18_19" />
+          <EntitySet Name="Germany_18_19" EntityType="BetForMeDB.Germany_18_19" />
+          <EntitySet Name="Spain_18_19" EntityType="BetForMeDB.Spain_18_19" />
+        </EntityContainer>
+        <EntityType Name="England_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HomeTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="AwayTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FTHG" Type="Int64" />
+          <Property Name="FTAG" Type="Int64" />
+          <Property Name="FTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HTHG" Type="Int64" />
+          <Property Name="HTAG" Type="Int64" />
+          <Property Name="HTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Referee" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HS" Type="Int64" />
+          <Property Name="AS" Type="Int64" />
+          <Property Name="HST" Type="Int64" />
+          <Property Name="AST" Type="Int64" />
+          <Property Name="HF" Type="Int64" />
+          <Property Name="AF" Type="Int64" />
+          <Property Name="HC" Type="Int64" />
+          <Property Name="AC" Type="Int64" />
+          <Property Name="HY" Type="Int64" />
+          <Property Name="AY" Type="Int64" />
+          <Property Name="HR" Type="Int64" />
+          <Property Name="AR" Type="Int64" />
+          <Property Name="B365H" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="Int64" />
+          <Property Name="BbMxH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="Int64" />
+          <Property Name="BbMx_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="Int64" />
+          <Property Name="BbAHh" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Germany_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HomeTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="AwayTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FTHG" Type="Int64" />
+          <Property Name="FTAG" Type="Int64" />
+          <Property Name="FTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HTHG" Type="Int64" />
+          <Property Name="HTAG" Type="Int64" />
+          <Property Name="HTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HS" Type="Int64" />
+          <Property Name="AS" Type="Int64" />
+          <Property Name="HST" Type="Int64" />
+          <Property Name="AST" Type="Int64" />
+          <Property Name="HF" Type="Int64" />
+          <Property Name="AF" Type="Int64" />
+          <Property Name="HC" Type="Int64" />
+          <Property Name="AC" Type="Int64" />
+          <Property Name="HY" Type="Int64" />
+          <Property Name="AY" Type="Int64" />
+          <Property Name="HR" Type="Int64" />
+          <Property Name="AR" Type="Int64" />
+          <Property Name="B365H" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="Int64" />
+          <Property Name="BbMxH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="Int64" />
+          <Property Name="BbMx_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="Int64" />
+          <Property Name="BbAHh" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Spain_18_19">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HomeTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="AwayTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FTHG" Type="Int64" />
+          <Property Name="FTAG" Type="Int64" />
+          <Property Name="FTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HTHG" Type="Int64" />
+          <Property Name="HTAG" Type="Int64" />
+          <Property Name="HTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HS" Type="Int64" />
+          <Property Name="AS" Type="Int64" />
+          <Property Name="HST" Type="Int64" />
+          <Property Name="AST" Type="Int64" />
+          <Property Name="HF" Type="Int64" />
+          <Property Name="AF" Type="Int64" />
+          <Property Name="HC" Type="Int64" />
+          <Property Name="AC" Type="Int64" />
+          <Property Name="HY" Type="Int64" />
+          <Property Name="AY" Type="Int64" />
+          <Property Name="HR" Type="Int64" />
+          <Property Name="AR" Type="Int64" />
+          <Property Name="B365H" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365D" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="B365A" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="IWA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="WHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="VCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="Bb1X2" Type="Int64" />
+          <Property Name="BbMxH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbOU" Type="Int64" />
+          <Property Name="BbMx_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_5" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMx_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAv_2_51" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAH" Type="Int64" />
+          <Property Name="BbAHh" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbMxAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="BbAvAHA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCH" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCD" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="PSCA" Type="Decimal" Precision="53" Scale="0" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="BetForMeDB" />
+        <Alias Key="Target" Value="BetForMeDB.Store" />
+        <EntityContainerMapping CdmEntityContainer="BetForMeDBContainer" StorageEntityContainer="BetForMeDBStoreContainer">
+          <EntitySetMapping Name="England_18_19">
+            <EntityTypeMapping TypeName="BetForMeDB.England_18_19">
+              <MappingFragment StoreEntitySet="England_18_19">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PSCA" ColumnName="PSCA" />
+                <ScalarProperty Name="PSCD" ColumnName="PSCD" />
+                <ScalarProperty Name="PSCH" ColumnName="PSCH" />
+                <ScalarProperty Name="BbAvAHA" ColumnName="BbAvAHA" />
+                <ScalarProperty Name="BbMxAHA" ColumnName="BbMxAHA" />
+                <ScalarProperty Name="BbAvAHH" ColumnName="BbAvAHH" />
+                <ScalarProperty Name="BbMxAHH" ColumnName="BbMxAHH" />
+                <ScalarProperty Name="BbAHh" ColumnName="BbAHh" />
+                <ScalarProperty Name="BbAH" ColumnName="BbAH" />
+                <ScalarProperty Name="BbAv_2_51" ColumnName="BbAv&lt;2.5" />
+                <ScalarProperty Name="BbMx_2_51" ColumnName="BbMx&lt;2.5" />
+                <ScalarProperty Name="BbAv_2_5" ColumnName="BbAv&gt;2.5" />
+                <ScalarProperty Name="BbMx_2_5" ColumnName="BbMx&gt;2.5" />
+                <ScalarProperty Name="BbOU" ColumnName="BbOU" />
+                <ScalarProperty Name="BbAvA" ColumnName="BbAvA" />
+                <ScalarProperty Name="BbMxA" ColumnName="BbMxA" />
+                <ScalarProperty Name="BbAvD" ColumnName="BbAvD" />
+                <ScalarProperty Name="BbMxD" ColumnName="BbMxD" />
+                <ScalarProperty Name="BbAvH" ColumnName="BbAvH" />
+                <ScalarProperty Name="BbMxH" ColumnName="BbMxH" />
+                <ScalarProperty Name="Bb1X2" ColumnName="Bb1X2" />
+                <ScalarProperty Name="VCA" ColumnName="VCA" />
+                <ScalarProperty Name="VCD" ColumnName="VCD" />
+                <ScalarProperty Name="VCH" ColumnName="VCH" />
+                <ScalarProperty Name="WHA" ColumnName="WHA" />
+                <ScalarProperty Name="WHD" ColumnName="WHD" />
+                <ScalarProperty Name="WHH" ColumnName="WHH" />
+                <ScalarProperty Name="PSA" ColumnName="PSA" />
+                <ScalarProperty Name="PSD" ColumnName="PSD" />
+                <ScalarProperty Name="PSH" ColumnName="PSH" />
+                <ScalarProperty Name="IWA" ColumnName="IWA" />
+                <ScalarProperty Name="IWD" ColumnName="IWD" />
+                <ScalarProperty Name="IWH" ColumnName="IWH" />
+                <ScalarProperty Name="BWA" ColumnName="BWA" />
+                <ScalarProperty Name="BWD" ColumnName="BWD" />
+                <ScalarProperty Name="BWH" ColumnName="BWH" />
+                <ScalarProperty Name="B365A" ColumnName="B365A" />
+                <ScalarProperty Name="B365D" ColumnName="B365D" />
+                <ScalarProperty Name="B365H" ColumnName="B365H" />
+                <ScalarProperty Name="AR" ColumnName="AR" />
+                <ScalarProperty Name="HR" ColumnName="HR" />
+                <ScalarProperty Name="AY" ColumnName="AY" />
+                <ScalarProperty Name="HY" ColumnName="HY" />
+                <ScalarProperty Name="AC" ColumnName="AC" />
+                <ScalarProperty Name="HC" ColumnName="HC" />
+                <ScalarProperty Name="AF" ColumnName="AF" />
+                <ScalarProperty Name="HF" ColumnName="HF" />
+                <ScalarProperty Name="AST" ColumnName="AST" />
+                <ScalarProperty Name="HST" ColumnName="HST" />
+                <ScalarProperty Name="AS" ColumnName="AS" />
+                <ScalarProperty Name="HS" ColumnName="HS" />
+                <ScalarProperty Name="Referee" ColumnName="Referee" />
+                <ScalarProperty Name="HTR" ColumnName="HTR" />
+                <ScalarProperty Name="HTAG" ColumnName="HTAG" />
+                <ScalarProperty Name="HTHG" ColumnName="HTHG" />
+                <ScalarProperty Name="FTR" ColumnName="FTR" />
+                <ScalarProperty Name="FTAG" ColumnName="FTAG" />
+                <ScalarProperty Name="FTHG" ColumnName="FTHG" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Div" ColumnName="Div" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Germany_18_19">
+            <EntityTypeMapping TypeName="BetForMeDB.Germany_18_19">
+              <MappingFragment StoreEntitySet="Germany_18_19">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PSCA" ColumnName="PSCA" />
+                <ScalarProperty Name="PSCD" ColumnName="PSCD" />
+                <ScalarProperty Name="PSCH" ColumnName="PSCH" />
+                <ScalarProperty Name="BbAvAHA" ColumnName="BbAvAHA" />
+                <ScalarProperty Name="BbMxAHA" ColumnName="BbMxAHA" />
+                <ScalarProperty Name="BbAvAHH" ColumnName="BbAvAHH" />
+                <ScalarProperty Name="BbMxAHH" ColumnName="BbMxAHH" />
+                <ScalarProperty Name="BbAHh" ColumnName="BbAHh" />
+                <ScalarProperty Name="BbAH" ColumnName="BbAH" />
+                <ScalarProperty Name="BbAv_2_51" ColumnName="BbAv&lt;2.5" />
+                <ScalarProperty Name="BbMx_2_51" ColumnName="BbMx&lt;2.5" />
+                <ScalarProperty Name="BbAv_2_5" ColumnName="BbAv&gt;2.5" />
+                <ScalarProperty Name="BbMx_2_5" ColumnName="BbMx&gt;2.5" />
+                <ScalarProperty Name="BbOU" ColumnName="BbOU" />
+                <ScalarProperty Name="BbAvA" ColumnName="BbAvA" />
+                <ScalarProperty Name="BbMxA" ColumnName="BbMxA" />
+                <ScalarProperty Name="BbAvD" ColumnName="BbAvD" />
+                <ScalarProperty Name="BbMxD" ColumnName="BbMxD" />
+                <ScalarProperty Name="BbAvH" ColumnName="BbAvH" />
+                <ScalarProperty Name="BbMxH" ColumnName="BbMxH" />
+                <ScalarProperty Name="Bb1X2" ColumnName="Bb1X2" />
+                <ScalarProperty Name="VCA" ColumnName="VCA" />
+                <ScalarProperty Name="VCD" ColumnName="VCD" />
+                <ScalarProperty Name="VCH" ColumnName="VCH" />
+                <ScalarProperty Name="WHA" ColumnName="WHA" />
+                <ScalarProperty Name="WHD" ColumnName="WHD" />
+                <ScalarProperty Name="WHH" ColumnName="WHH" />
+                <ScalarProperty Name="PSA" ColumnName="PSA" />
+                <ScalarProperty Name="PSD" ColumnName="PSD" />
+                <ScalarProperty Name="PSH" ColumnName="PSH" />
+                <ScalarProperty Name="IWA" ColumnName="IWA" />
+                <ScalarProperty Name="IWD" ColumnName="IWD" />
+                <ScalarProperty Name="IWH" ColumnName="IWH" />
+                <ScalarProperty Name="BWA" ColumnName="BWA" />
+                <ScalarProperty Name="BWD" ColumnName="BWD" />
+                <ScalarProperty Name="BWH" ColumnName="BWH" />
+                <ScalarProperty Name="B365A" ColumnName="B365A" />
+                <ScalarProperty Name="B365D" ColumnName="B365D" />
+                <ScalarProperty Name="B365H" ColumnName="B365H" />
+                <ScalarProperty Name="AR" ColumnName="AR" />
+                <ScalarProperty Name="HR" ColumnName="HR" />
+                <ScalarProperty Name="AY" ColumnName="AY" />
+                <ScalarProperty Name="HY" ColumnName="HY" />
+                <ScalarProperty Name="AC" ColumnName="AC" />
+                <ScalarProperty Name="HC" ColumnName="HC" />
+                <ScalarProperty Name="AF" ColumnName="AF" />
+                <ScalarProperty Name="HF" ColumnName="HF" />
+                <ScalarProperty Name="AST" ColumnName="AST" />
+                <ScalarProperty Name="HST" ColumnName="HST" />
+                <ScalarProperty Name="AS" ColumnName="AS" />
+                <ScalarProperty Name="HS" ColumnName="HS" />
+                <ScalarProperty Name="HTR" ColumnName="HTR" />
+                <ScalarProperty Name="HTAG" ColumnName="HTAG" />
+                <ScalarProperty Name="HTHG" ColumnName="HTHG" />
+                <ScalarProperty Name="FTR" ColumnName="FTR" />
+                <ScalarProperty Name="FTAG" ColumnName="FTAG" />
+                <ScalarProperty Name="FTHG" ColumnName="FTHG" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Div" ColumnName="Div" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Spain_18_19">
+            <EntityTypeMapping TypeName="BetForMeDB.Spain_18_19">
+              <MappingFragment StoreEntitySet="Spain_18_19">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PSCA" ColumnName="PSCA" />
+                <ScalarProperty Name="PSCD" ColumnName="PSCD" />
+                <ScalarProperty Name="PSCH" ColumnName="PSCH" />
+                <ScalarProperty Name="BbAvAHA" ColumnName="BbAvAHA" />
+                <ScalarProperty Name="BbMxAHA" ColumnName="BbMxAHA" />
+                <ScalarProperty Name="BbAvAHH" ColumnName="BbAvAHH" />
+                <ScalarProperty Name="BbMxAHH" ColumnName="BbMxAHH" />
+                <ScalarProperty Name="BbAHh" ColumnName="BbAHh" />
+                <ScalarProperty Name="BbAH" ColumnName="BbAH" />
+                <ScalarProperty Name="BbAv_2_51" ColumnName="BbAv&lt;2.5" />
+                <ScalarProperty Name="BbMx_2_51" ColumnName="BbMx&lt;2.5" />
+                <ScalarProperty Name="BbAv_2_5" ColumnName="BbAv&gt;2.5" />
+                <ScalarProperty Name="BbMx_2_5" ColumnName="BbMx&gt;2.5" />
+                <ScalarProperty Name="BbOU" ColumnName="BbOU" />
+                <ScalarProperty Name="BbAvA" ColumnName="BbAvA" />
+                <ScalarProperty Name="BbMxA" ColumnName="BbMxA" />
+                <ScalarProperty Name="BbAvD" ColumnName="BbAvD" />
+                <ScalarProperty Name="BbMxD" ColumnName="BbMxD" />
+                <ScalarProperty Name="BbAvH" ColumnName="BbAvH" />
+                <ScalarProperty Name="BbMxH" ColumnName="BbMxH" />
+                <ScalarProperty Name="Bb1X2" ColumnName="Bb1X2" />
+                <ScalarProperty Name="VCA" ColumnName="VCA" />
+                <ScalarProperty Name="VCD" ColumnName="VCD" />
+                <ScalarProperty Name="VCH" ColumnName="VCH" />
+                <ScalarProperty Name="WHA" ColumnName="WHA" />
+                <ScalarProperty Name="WHD" ColumnName="WHD" />
+                <ScalarProperty Name="WHH" ColumnName="WHH" />
+                <ScalarProperty Name="PSA" ColumnName="PSA" />
+                <ScalarProperty Name="PSD" ColumnName="PSD" />
+                <ScalarProperty Name="PSH" ColumnName="PSH" />
+                <ScalarProperty Name="IWA" ColumnName="IWA" />
+                <ScalarProperty Name="IWD" ColumnName="IWD" />
+                <ScalarProperty Name="IWH" ColumnName="IWH" />
+                <ScalarProperty Name="BWA" ColumnName="BWA" />
+                <ScalarProperty Name="BWD" ColumnName="BWD" />
+                <ScalarProperty Name="BWH" ColumnName="BWH" />
+                <ScalarProperty Name="B365A" ColumnName="B365A" />
+                <ScalarProperty Name="B365D" ColumnName="B365D" />
+                <ScalarProperty Name="B365H" ColumnName="B365H" />
+                <ScalarProperty Name="AR" ColumnName="AR" />
+                <ScalarProperty Name="HR" ColumnName="HR" />
+                <ScalarProperty Name="AY" ColumnName="AY" />
+                <ScalarProperty Name="HY" ColumnName="HY" />
+                <ScalarProperty Name="AC" ColumnName="AC" />
+                <ScalarProperty Name="HC" ColumnName="HC" />
+                <ScalarProperty Name="AF" ColumnName="AF" />
+                <ScalarProperty Name="HF" ColumnName="HF" />
+                <ScalarProperty Name="AST" ColumnName="AST" />
+                <ScalarProperty Name="HST" ColumnName="HST" />
+                <ScalarProperty Name="AS" ColumnName="AS" />
+                <ScalarProperty Name="HS" ColumnName="HS" />
+                <ScalarProperty Name="HTR" ColumnName="HTR" />
+                <ScalarProperty Name="HTAG" ColumnName="HTAG" />
+                <ScalarProperty Name="HTHG" ColumnName="HTHG" />
+                <ScalarProperty Name="FTR" ColumnName="FTR" />
+                <ScalarProperty Name="FTAG" ColumnName="FTAG" />
+                <ScalarProperty Name="FTHG" ColumnName="FTHG" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Div" ColumnName="Div" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
