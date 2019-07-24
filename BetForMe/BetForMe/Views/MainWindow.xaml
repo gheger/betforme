@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BetForMe"
         mc:Ignorable="d"
-        Title="Bet for me" Height="450" Width="800">
+        xmlns:resources="clr-namespace:BetForMe.Resources"
+        Title="{x:Static resources:Resources.ApplicationTitle}"
+        Height="545" Width="1000">
     <Grid>
         
     </Grid>

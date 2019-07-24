@@ -1,8 +1,11 @@
 ﻿using BetForMe.Model;
+using BetForMe.ViewModels;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,21 +25,18 @@ namespace BetForMe
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly BetForMeViewModel _viewModel;
+
+        private readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public MainWindow()
         {
             InitializeComponent();
 
-            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
-                var result = from r in c.Germany_18_19 select r;
-                var resultAsList = result.ToList<Germany_18_19>();
+            _log.Info("Starting application...");
 
-                var result2 = from r2 in c.England_18_19 select r2;
-                var resultAsList2 = result2.ToList<England_18_19>();
-
-                var result3 = from r3 in c.Spain_18_19 select r3;
-                var resultAsList3 = result3.ToList<Spain_18_19>();
-            }
-
+            _viewModel = new BetForMeViewModel();
+            DataContext = _viewModel;
         }
     }
 }
