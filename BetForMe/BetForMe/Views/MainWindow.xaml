@@ -8,7 +8,33 @@
         xmlns:resources="clr-namespace:BetForMe.Resources"
         Title="{x:Static resources:Resources.ApplicationTitle}"
         Height="545" Width="1000">
-    <Grid>
-        
-    </Grid>
+    <DockPanel>
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar x:Name="tbMainWindow" DockPanel.Dock="Top">
+                <Button x:Name="btnExample" Command="{Binding ExampleCommand}">
+                    <Image Source="../Resources/Icons/example.png"/>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <StatusBar DockPanel.Dock="Bottom">
+            <TextBlock Text="{Binding StatusBarText}"/>
+        </StatusBar>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+            </Grid.Resources>
+
+            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+            
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+
+            <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+            
+        </Grid>
+    </DockPanel>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using BetForMe.Model;
 using log4net;
+using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Reflection;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BetForMe.ViewModels
 {
@@ -16,7 +18,12 @@ namespace BetForMe.ViewModels
 
         private ResourceManager _rm = new ResourceManager("BetForMe.Resources.Resources", Assembly.GetExecutingAssembly());
 
+        private string _statusBarText;
+
+        public ICommand ExampleCommand { get; private set; }
+
         public BetForMeViewModel() {
+            ExampleCommand = new ActionCommand(ExecuteExampleCommand);
 
             //TODO GHE
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
@@ -32,5 +39,31 @@ namespace BetForMe.ViewModels
 
 
         }
+
+        #region Commands
+
+        private void ExecuteExampleCommand() {
+            _log.Debug("Received ExampleCommand");
+
+            //TODO stuff
+
+            StatusBarText = "ExampleCommand";
+        }
+
+        #endregion Commands
+
+        #region Properties
+
+        public string StatusBarText {
+            get { return _statusBarText; }
+            set {
+                if (_statusBarText != value) {
+                    _statusBarText = value;
+                    OnNotifyPropertyChanged();
+                }
+            }
+        }
+
+        #endregion Properties
     }
 }
