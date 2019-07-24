@@ -3,17 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:BetForMe"
         mc:Ignorable="d"
         xmlns:resources="clr-namespace:BetForMe.Resources"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="{x:Static resources:Resources.ApplicationTitle}"
         Height="545" Width="1000">
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
             <ToolBar x:Name="tbMainWindow" DockPanel.Dock="Top">
-                <Button x:Name="btnExample" Command="{Binding ExampleCommand}">
+                <!--<Button x:Name="btnExample" Command="{Binding ExampleCommand}">
                     <Image Source="../Resources/Icons/example.png"/>
-                </Button>
+                </Button>-->
             </ToolBar>
         </ToolBarTray>
         <StatusBar DockPanel.Dock="Bottom">
@@ -29,11 +31,42 @@
             <Grid.Resources>
             </Grid.Resources>
 
-            <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+            <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock>Championship:</TextBlock>
+                <ComboBox SelectedItem="{Binding SelectedChampionship}" SelectedIndex="0">
+                    <ComboBoxItem>Premier League</ComboBoxItem>
+                    <ComboBoxItem>Bundesliga</ComboBoxItem>
+                    <ComboBoxItem>La Liga</ComboBoxItem>
+                </ComboBox>
+                <TextBlock>Odds between </TextBlock>
+                <xctk:DoubleUpDown FormatString="F2" Increment=".1"  Maximum="10" Value="{Binding MinOdd}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:DoubleUpDown>
+                <TextBlock>and</TextBlock>
+                <xctk:DoubleUpDown FormatString="F2" Increment=".1"  Maximum="10" Value="{Binding MaxOdd}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:DoubleUpDown>
+
+                <Button Command="{Binding SimulateCommand}">Simulate</Button>
+
+
+            </StackPanel>
             
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
-            <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"></StackPanel>
+            <StackPanel Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <TextBlock>Simulation result:</TextBlock>
+                <TextBlock Text="{Binding SimulationResult}"/>
+
+            </StackPanel>
             
         </Grid>
     </DockPanel>
