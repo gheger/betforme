@@ -33,11 +33,7 @@
 
             <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock>Championship:</TextBlock>
-                <ComboBox SelectedItem="{Binding SelectedChampionship}" SelectedIndex="0">
-                    <ComboBoxItem>Premier League</ComboBoxItem>
-                    <ComboBoxItem>Bundesliga</ComboBoxItem>
-                    <ComboBoxItem>La Liga</ComboBoxItem>
-                </ComboBox>
+                <ComboBox x:Name="cbChampionship" ItemsSource="{Binding Championships}"  SelectedItem="{Binding SelectedChampionship}"/>
                 <TextBlock>Odds between </TextBlock>
                 <xctk:DoubleUpDown FormatString="F2" Increment=".1"  Maximum="10" Value="{Binding MinOdd}">
                     <i:Interaction.Triggers>

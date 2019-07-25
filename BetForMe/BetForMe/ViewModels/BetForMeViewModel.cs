@@ -21,11 +21,12 @@ namespace BetForMe.ViewModels {
 
         private BetHelper _bh = new BetHelper();
 
+        private IList<string> _championships = new List<string>();
         private string _statusBarText;
         private string _simulationResult;
-        private ComboBoxItem _selectedChampionship;
+        private string _selectedChampionship;
 
-        private readonly string defaultChampionship = "Premier League";
+        public readonly string defaultChampionship = "Premier League";
         private readonly double defaultMinOdd = 0.0;
         private readonly double defaultMaxOdd = 1.5;
 
@@ -36,6 +37,7 @@ namespace BetForMe.ViewModels {
 
             MinOdd = defaultMinOdd;
             MaxOdd = defaultMaxOdd;
+            SelectedChampionship = defaultChampionship;
 
             //Check dababases availability
             try {
@@ -51,7 +53,19 @@ namespace BetForMe.ViewModels {
                 StatusBarText = "DB could not be loaded : " + ex.Message;
                 _log.Error(ex);
             }
+
+            LoadChampionships();
         }
+
+        #region Private methods
+
+        private void LoadChampionships() {
+            Championships.Add("Premier League");
+            Championships.Add("Bundesliga");
+            Championships.Add("La Liga");                                
+        }
+
+        #endregion
 
         #region Commands
 
@@ -63,7 +77,7 @@ namespace BetForMe.ViewModels {
 
                 var allGames = c.England_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
 
-                switch (SelectedChampionship.Content) {
+                switch (SelectedChampionship) {
                     case "Premier League":
                         //allGames = c.England_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
                         break;
@@ -105,7 +119,6 @@ namespace BetForMe.ViewModels {
         #endregion Commands
 
         #region Properties
-
         public string StatusBarText {
             get { return _statusBarText; }
             set {
@@ -125,7 +138,7 @@ namespace BetForMe.ViewModels {
             }
         }
 
-        public ComboBoxItem SelectedChampionship {
+        public string SelectedChampionship {
             get { return _selectedChampionship; }
             set {
                 if (_selectedChampionship != value) {
@@ -139,6 +152,8 @@ namespace BetForMe.ViewModels {
         public double MinOdd { get; set; }
 
         public double MaxOdd { get; set; }
+
+        public IList<string> Championships { get => _championships; set => _championships = value; }
 
         #endregion Properties
     }
