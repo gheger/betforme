@@ -23,11 +23,11 @@ namespace BetForMe.ViewModels {
 
         private IList<string> _championships = new List<string>();
         private string _statusBarText;
-        private string _simulationResult;
         private string _selectedChampionship;
+        private Simulation _currentSimulation;
 
         public readonly string defaultChampionship = "Premier League";
-        private readonly double defaultMinOdd = 0.0;
+        private readonly double defaultMinOdd = 1.05;
         private readonly double defaultMaxOdd = 1.5;
 
         public ICommand SimulateCommand { get; private set; }
@@ -72,6 +72,9 @@ namespace BetForMe.ViewModels {
         private void ExecuteSimulateCommand() {
             _log.Debug("Received SimulateCommand");
 
+            Simulation sim = new Simulation() {
+                InitialBankroll = 100.0
+            };
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
 
@@ -89,18 +92,31 @@ namespace BetForMe.ViewModels {
                         break;
                 }
 
-                double bankroll = 100.0;
+                double bankroll = sim.InitialBankroll;
                 double bankrollUsedInPercent = 5.0;
 
                 foreach (var g in allGames) {
 
                     var stake = (bankroll * bankrollUsedInPercent / 100);
+
+                    //Update stats
+                    sim.TotalBets++;
+                    if (g.FTR.Equals("H")) {
+                        sim.BetsWon++;
+                    } else {
+                        sim.BetsLost++;
+                    }
+
+                    //Compute bet
                     var betResult = _bh.CalculateBet(stake, (double)g.IWH, g.FTR.Equals("H"));
 
+                    //Update bankroll
                     bankroll -= stake;
                     bankroll += betResult;
                 }
-                SimulationResult = string.Format("Bankroll at the end of the season: {0}", bankroll);
+
+                sim.FinalBankroll = bankroll;
+                CurrentSimulation = sim;
 
                 /*var result = from r in c.Germany_18_19 select r;
                         var resultAsList = result.ToList<Germany_18_19>();
@@ -128,11 +144,11 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
-        public string SimulationResult {
-            get { return _simulationResult; }
+        public Simulation CurrentSimulation {
+            get { return _currentSimulation; }
             set {
-                if (_simulationResult != value) {
-                    _simulationResult = value;
+                if (_currentSimulation != value) {
+                    _currentSimulation = value;
                     OnNotifyPropertyChanged();
                 }
             }
