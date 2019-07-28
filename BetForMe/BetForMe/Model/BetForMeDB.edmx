@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\dev\betforme\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bookmakers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Prefix" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Name" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="England">
           <Key>
             <PropertyRef Name="ID" />
@@ -81,6 +89,7 @@
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityContainer Name="BetForMeDBStoreContainer">
+          <EntitySet Name="Bookmakers" EntityType="Self.Bookmakers" store:Type="Tables" />
           <EntitySet Name="England" EntityType="Self.England" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -89,6 +98,7 @@
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BetForMeDB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="BetForMeDBContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="England" EntityType="BetForMeDB.England" />
+          <EntitySet Name="Bookmakers" EntityType="BetForMeDB.Bookmakers" />
         </EntityContainer>
         <EntityType Name="England">
           <Key>
@@ -163,6 +173,14 @@
           <Property Name="PSCH" Type="Double" />
           <Property Name="PSCD" Type="Double" />
           <Property Name="PSCA" Type="Double" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Bookmakers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Prefix" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         </Schema>
@@ -246,6 +264,15 @@
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Season" ColumnName="Season" />
                 <ScalarProperty Name="Div" ColumnName="Div" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookmakers">
+            <EntityTypeMapping TypeName="BetForMeDB.Bookmakers">
+              <MappingFragment StoreEntitySet="Bookmakers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Prefix" ColumnName="Prefix" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

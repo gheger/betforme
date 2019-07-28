@@ -24,6 +24,7 @@ namespace BetForMe.ViewModels {
         private string _statusBarText;
         private string _selectedChampionship;
         private string _selectedSeason;
+        private Bookmakers _selectedBookmaker;
         private Simulation _currentSimulation;
 
         private readonly double defaultMinOdd = 1.05;
@@ -55,6 +56,7 @@ namespace BetForMe.ViewModels {
             LoadChampionships(); // = tables in the DB
             LoadSeasons();
             LoadGames();
+            LoadBookmakers();
 
             _isLoaded = true;
         }
@@ -89,10 +91,17 @@ namespace BetForMe.ViewModels {
             }
         }
         private void LoadGames() {
-            Games.Add("Home only");
-            Games.Add("Away only");
-            Games.Add("Both");
-            SelectedGames = Games.First();
+            foreach (BetHelper.OddType ot in Enum.GetValues(typeof(BetHelper.OddType))) {
+                Games.Add(ot);
+            }
+            SelectedGames = Games.Where(g => g.Equals(BetHelper.OddType.Home)).FirstOrDefault();
+        }
+
+        private void LoadBookmakers() {
+            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+                Bookmakers = c.Bookmakers.ToList<Bookmakers>();
+                SelectedBookmaker = Bookmakers.Where(b => b.Name.Equals("Interwetten")).FirstOrDefault();
+            }
         }
 
         #endregion
@@ -100,7 +109,7 @@ namespace BetForMe.ViewModels {
         #region Commands
 
         private void ExecuteSimulateCommand() {
-            _log.Debug("Received SimulateCommand");
+            //_log.Debug("Received SimulateCommand");
 
             //Allow to simulate only if everything is loaded
             if (!_isLoaded) {
@@ -112,6 +121,7 @@ namespace BetForMe.ViewModels {
                 InitialBankroll = 100.0,
                 Championship = SelectedChampionship,
                 Season = SelectedSeason,
+                Bookmaker = SelectedBookmaker,
                 Games = SelectedGames,
                 MinOdd = MinOdd,
                 MaxOdd = MaxOdd,
@@ -168,6 +178,17 @@ namespace BetForMe.ViewModels {
             }
         }
 
+        public Bookmakers SelectedBookmaker {
+            get { return _selectedBookmaker; }
+            set {
+                if (_selectedBookmaker != value) {
+                    _selectedBookmaker = value;
+                    OnNotifyPropertyChanged();
+                    ExecuteSimulateCommand();
+                }
+            }
+        }        
+
         public double MinOdd { get; set; }
 
         public double MaxOdd { get; set; }
@@ -178,9 +199,11 @@ namespace BetForMe.ViewModels {
 
         public IList<string> Seasons { get; set; } = new List<string>();
 
-        public IList<string> Games { get; set; } = new List<string>();
+        public IList<BetHelper.OddType> Games { get; set; } = new List<BetHelper.OddType>();
 
-        public string SelectedGames { get; set; }
+        public IList<Bookmakers> Bookmakers { get; set; } = new List<Bookmakers>();
+
+        public BetHelper.OddType SelectedGames { get; set; }
 
         #endregion Properties
     }
