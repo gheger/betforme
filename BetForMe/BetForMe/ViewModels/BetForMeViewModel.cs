@@ -19,16 +19,16 @@ namespace BetForMe.ViewModels {
 
         private ResourceManager _rm = new ResourceManager("BetForMe.Resources.Resources", Assembly.GetExecutingAssembly());
 
-        private BetHelper _bh = new BetHelper();
+        private bool _isLoaded = false;
 
-        private IList<string> _championships = new List<string>();
         private string _statusBarText;
         private string _selectedChampionship;
+        private string _selectedSeason;
         private Simulation _currentSimulation;
 
-        public readonly string defaultChampionship = "Premier League";
         private readonly double defaultMinOdd = 1.05;
         private readonly double defaultMaxOdd = 1.5;
+        private readonly double defaultBankrollToPlay = 5.0;
 
         public ICommand SimulateCommand { get; private set; }
 
@@ -37,7 +37,7 @@ namespace BetForMe.ViewModels {
 
             MinOdd = defaultMinOdd;
             MaxOdd = defaultMaxOdd;
-            SelectedChampionship = defaultChampionship;
+            BankrollToPlay = defaultBankrollToPlay;
 
             //Check dababases availability
             try {
@@ -45,8 +45,6 @@ namespace BetForMe.ViewModels {
                     c.Database.ExecuteSqlCommand("SELECT 'something'");
 
                     _log.Debug("SQLite database OK");
-
-
                 }
                 StatusBarText = "DB loaded !";
             } catch (Exception ex) {
@@ -54,15 +52,47 @@ namespace BetForMe.ViewModels {
                 _log.Error(ex);
             }
 
-            LoadChampionships();
+            LoadChampionships(); // = tables in the DB
+            LoadSeasons();
+            LoadGames();
+
+            _isLoaded = true;
         }
 
         #region Private methods
 
         private void LoadChampionships() {
-            Championships.Add("Premier League");
-            Championships.Add("Bundesliga");
-            Championships.Add("La Liga");                                
+            string sqlListTables = @"
+                SELECT 
+                    name
+                FROM 
+                    sqlite_master 
+                WHERE 
+                    type ='table' AND 
+                    name NOT LIKE 'sqlite_%';
+            ";
+
+            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+                var result = c.Database.SqlQuery<string>(sqlListTables);
+                Championships = result.ToList<string>();
+                SelectedChampionship = Championships.First();
+            }                       
+        }
+
+        private void LoadSeasons() {
+            string sqlListSeasons = "SELECT distinct Season FROM {0}";
+
+            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+                var result = c.Database.SqlQuery<string>(string.Format(sqlListSeasons, SelectedChampionship));
+                Seasons = result.ToList<string>();
+                SelectedSeason = Seasons.Last();
+            }
+        }
+        private void LoadGames() {
+            Games.Add("Home only");
+            Games.Add("Away only");
+            Games.Add("Both");
+            SelectedGames = Games.First();
         }
 
         #endregion
@@ -72,62 +102,24 @@ namespace BetForMe.ViewModels {
         private void ExecuteSimulateCommand() {
             _log.Debug("Received SimulateCommand");
 
-            Simulation sim = new Simulation() {
-                InitialBankroll = 100.0
-            };
-
-            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
-
-                var allGames = c.England_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
-
-                switch (SelectedChampionship) {
-                    case "Premier League":
-                        //allGames = c.England_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
-                        break;
-                    case "Bundesliga":
-                        allGames = c.Germany_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
-                        break;
-                    case "La Liga":
-                        allGames = c.Spain_18_19.Where(w => (double)w.IWH >= MinOdd && (double)w.IWH <= MaxOdd).Select(s => new { s.HomeTeam, s.AwayTeam, s.FTHG, s.FTAG, s.FTR, s.IWA, s.IWD, s.IWH }).ToList();
-                        break;
-                }
-
-                double bankroll = sim.InitialBankroll;
-                double bankrollUsedInPercent = 5.0;
-
-                foreach (var g in allGames) {
-
-                    var stake = (bankroll * bankrollUsedInPercent / 100);
-
-                    //Update stats
-                    sim.TotalBets++;
-                    if (g.FTR.Equals("H")) {
-                        sim.BetsWon++;
-                    } else {
-                        sim.BetsLost++;
-                    }
-
-                    //Compute bet
-                    var betResult = _bh.CalculateBet(stake, (double)g.IWH, g.FTR.Equals("H"));
-
-                    //Update bankroll
-                    bankroll -= stake;
-                    bankroll += betResult;
-                }
-
-                sim.FinalBankroll = bankroll;
-                CurrentSimulation = sim;
-
-                /*var result = from r in c.Germany_18_19 select r;
-                        var resultAsList = result.ToList<Germany_18_19>();
-
-                        var result2 = from r2 in c.England_18_19 select r2;
-                        var resultAsList2 = result2.ToList<England_18_19>();
-
-                        var result3 = from r3 in c.Spain_18_19 select r3;
-                        var resultAsList3 = result3.ToList<Spain_18_19>();*/
+            //Allow to simulate only if everything is loaded
+            if (!_isLoaded) {
+                return;
             }
 
+            //Create a simulation (not executed yet)
+            Simulation sim = new Simulation() {
+                InitialBankroll = 100.0,
+                Championship = SelectedChampionship,
+                Season = SelectedSeason,
+                Games = SelectedGames,
+                MinOdd = MinOdd,
+                MaxOdd = MaxOdd,
+                BankrollToPlay = BankrollToPlay,
+            };
+
+            sim.Simulate();
+            CurrentSimulation = sim;            
 
             StatusBarText = "Simulation done";
         }
@@ -165,11 +157,30 @@ namespace BetForMe.ViewModels {
             }
         }
 
+        public string SelectedSeason {
+            get { return _selectedSeason; }
+            set {
+                if (_selectedSeason != value) {
+                    _selectedSeason = value;
+                    OnNotifyPropertyChanged();
+                    ExecuteSimulateCommand();
+                }
+            }
+        }
+
         public double MinOdd { get; set; }
 
         public double MaxOdd { get; set; }
 
-        public IList<string> Championships { get => _championships; set => _championships = value; }
+        public double BankrollToPlay { get; set; }
+
+        public IList<string> Championships { get; set; } = new List<string>();
+
+        public IList<string> Seasons { get; set; } = new List<string>();
+
+        public IList<string> Games { get; set; } = new List<string>();
+
+        public string SelectedGames { get; set; }
 
         #endregion Properties
     }

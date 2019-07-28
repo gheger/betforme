@@ -112,6 +112,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Helpers\BetHelper.cs" />
+    <Compile Include="Model\England.cs">
+      <DependentUpon>BetForMeDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -145,15 +148,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\England_18_19.cs">
-      <DependentUpon>BetForMeDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Germany_18_19.cs">
-      <DependentUpon>BetForMeDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Spain_18_19.cs">
-      <DependentUpon>BetForMeDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

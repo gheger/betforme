@@ -41,14 +41,20 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Column="0" Grid.Row="0">Championship:</TextBlock>
-                <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" x:Name="cbChampionship" ItemsSource="{Binding Championships}"  SelectedItem="{Binding SelectedChampionship}"/>
+                <ComboBox Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" ItemsSource="{Binding Championships}"  SelectedItem="{Binding SelectedChampionship}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="1">Odds between</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
+                <TextBlock Grid.Column="0" Grid.Row="1">Season:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding Seasons}"  SelectedItem="{Binding SelectedSeason}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="2">Odds between</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="2" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
@@ -56,9 +62,9 @@
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
                 
-                <TextBlock Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center">and</TextBlock>
+                <TextBlock Grid.Column="2" Grid.Row="2" HorizontalAlignment="Center">and</TextBlock>
                 
-                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="1" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
+                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="2" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
@@ -66,7 +72,19 @@
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
 
-                <Button Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Bottom" Command="{Binding SimulateCommand}">Simulate</Button>
+                <TextBlock Grid.Column="0" Grid.Row="3">Games:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Games}"  SelectedItem="{Binding SelectedGames}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="4">Bankroll to play [%]:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" FormatString="F2" Increment="1"  Maximum="100" Value="{Binding BankrollToPlay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:DoubleUpDown>
+
+                <Button Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="4" VerticalAlignment="Bottom" Command="{Binding SimulateCommand}">Simulate</Button>
 
             </Grid>
 
