@@ -25,6 +25,7 @@ namespace BetForMe.ViewModels {
         private string _selectedChampionship;
         private string _selectedSeason;
         private Bookmakers _selectedBookmaker;
+        private BetHelper.OddType _selectedGames;
         private Simulation _currentSimulation;
 
         private readonly double defaultMinOdd = 1.05;
@@ -71,7 +72,8 @@ namespace BetForMe.ViewModels {
                     sqlite_master 
                 WHERE 
                     type ='table' AND 
-                    name NOT LIKE 'sqlite_%';
+                    name NOT LIKE 'sqlite_%' AND
+                    name NOT LIKE 'Bookmakers';
             ";
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
@@ -109,7 +111,6 @@ namespace BetForMe.ViewModels {
         #region Commands
 
         private void ExecuteSimulateCommand() {
-            //_log.Debug("Received SimulateCommand");
 
             //Allow to simulate only if everything is loaded
             if (!_isLoaded) {
@@ -187,7 +188,18 @@ namespace BetForMe.ViewModels {
                     ExecuteSimulateCommand();
                 }
             }
-        }        
+        }
+
+        public BetHelper.OddType SelectedGames {
+            get { return _selectedGames; }
+            set {
+                if (_selectedGames != value) {
+                    _selectedGames = value;
+                    OnNotifyPropertyChanged();
+                    ExecuteSimulateCommand();
+                }
+            }
+        }
 
         public double MinOdd { get; set; }
 
@@ -202,8 +214,6 @@ namespace BetForMe.ViewModels {
         public IList<BetHelper.OddType> Games { get; set; } = new List<BetHelper.OddType>();
 
         public IList<Bookmakers> Bookmakers { get; set; } = new List<Bookmakers>();
-
-        public BetHelper.OddType SelectedGames { get; set; }
 
         #endregion Properties
     }

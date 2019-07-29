@@ -38,9 +38,38 @@ namespace BetForMe.Helpers {
 
         public List<string> GetLeagueTableTop(List<England> allChampGames, int top, DateTime untilDate) {
 
-           
+            int victoryPoints = 3;
+            int drawPoints = 1;
 
-                return null;
+            var gamesUntil = allChampGames.Where(w => w.Date < untilDate);
+
+            Dictionary<string, int> leagueTable = new Dictionary<string, int>(); //Team name, points
+            List<string> topN = new List<string>();
+
+            foreach (var g in gamesUntil) {
+
+                //Add 2 teams if not exists                
+                if (!leagueTable.ContainsKey(g.HomeTeam)) {
+                    leagueTable.Add(g.HomeTeam, 0);
+                }
+                if (!leagueTable.ContainsKey(g.AwayTeam)) {
+                    leagueTable.Add(g.AwayTeam, 0);
+                }
+
+                //Count points
+                if (IsGameWon(g, OddType.Home)) { //Home won
+                    leagueTable[g.HomeTeam] += victoryPoints;
+                } else if (IsGameWon(g, OddType.Away)) { //Away won
+                    leagueTable[g.AwayTeam] += victoryPoints;
+                } else { //Draw
+                    leagueTable[g.HomeTeam] += drawPoints;
+                    leagueTable[g.AwayTeam] += drawPoints;
+                }
+            }
+
+            topN = leagueTable.OrderByDescending(x => x.Value).Take(top).Select(s => s.Key).ToList<string>();
+
+            return topN;
         }
 
     }
