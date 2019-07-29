@@ -45,6 +45,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
@@ -79,8 +80,17 @@
                 <TextBlock Grid.Column="0" Grid.Row="4">Games:</TextBlock>
                 <ComboBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Games}"  SelectedItem="{Binding SelectedGames}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="5">Bankroll to play [%]:</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" FormatString="F2" Increment="1"  Maximum="100" Value="{Binding BankrollToPlay}">
+                <TextBlock Grid.Column="0" Grid.Row="5">Limit teams to top:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Increment="1"  Maximum="20" Value="{Binding OnlyTopNteams}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="ValueChanged">
+                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </xctk:DoubleUpDown>
+
+                <TextBlock Grid.Column="0" Grid.Row="6">Bankroll to play [%]:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" FormatString="F2" Increment="1"  Maximum="100" Value="{Binding BankrollToPlay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />

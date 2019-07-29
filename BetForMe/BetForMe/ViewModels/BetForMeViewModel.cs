@@ -28,18 +28,21 @@ namespace BetForMe.ViewModels {
         private BetHelper.OddType _selectedGames;
         private Simulation _currentSimulation;
 
-        private readonly double defaultMinOdd = 1.05;
-        private readonly double defaultMaxOdd = 1.5;
-        private readonly double defaultBankrollToPlay = 5.0;
+        private readonly double _defaultInitialBankroll = 100.0;
+        private readonly double _defaultMinOdd = 1.25;
+        private readonly double _defaultMaxOdd = 1.6;
+        private readonly int _defaultOnlyTopNteams = 0;
+        private readonly double _defaultBankrollToPlay = 5.0; //in percent
 
         public ICommand SimulateCommand { get; private set; }
 
         public BetForMeViewModel() {
             SimulateCommand = new ActionCommand(ExecuteSimulateCommand);
 
-            MinOdd = defaultMinOdd;
-            MaxOdd = defaultMaxOdd;
-            BankrollToPlay = defaultBankrollToPlay;
+            MinOdd = _defaultMinOdd;
+            MaxOdd = _defaultMaxOdd;
+            BankrollToPlay = _defaultBankrollToPlay;
+            OnlyTopNteams = _defaultOnlyTopNteams;
 
             //Check dababases availability
             try {
@@ -119,13 +122,14 @@ namespace BetForMe.ViewModels {
 
             //Create a simulation (not executed yet)
             Simulation sim = new Simulation() {
-                InitialBankroll = 100.0,
+                InitialBankroll = _defaultInitialBankroll,
                 Championship = SelectedChampionship,
                 Season = SelectedSeason,
                 Bookmaker = SelectedBookmaker,
                 Games = SelectedGames,
                 MinOdd = MinOdd,
                 MaxOdd = MaxOdd,
+                OnlyTopNteams = OnlyTopNteams,
                 BankrollToPlay = BankrollToPlay,
             };
 
@@ -204,6 +208,8 @@ namespace BetForMe.ViewModels {
         public double MinOdd { get; set; }
 
         public double MaxOdd { get; set; }
+
+        public int OnlyTopNteams { get; set; }
 
         public double BankrollToPlay { get; set; }
 

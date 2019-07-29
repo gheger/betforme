@@ -25,7 +25,6 @@ namespace BetForMe.Model {
         private int _betsLost = 0;
 
         public void Simulate() {
-            OnlyTopNteams = 5;
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
 
@@ -78,6 +77,7 @@ namespace BetForMe.Model {
 
                     foreach (var game in gameDay) {
 
+                        //If OnlyTopNteams param is set, limit games to these teams
                         if (OnlyTopNteams > 0 && todaysTop.Count > 0 &&
                             (Games == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
                             Games == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
