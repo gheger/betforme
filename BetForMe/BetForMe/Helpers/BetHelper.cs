@@ -36,6 +36,13 @@ namespace BetForMe.Helpers {
             return false;
         }
 
+        /**
+         * Calculates the league table at a certain point of time.
+         * Return the top N times
+         * 
+         * TODO GHE
+         * Possible improvement: at the start of the season, return the teams with the lowest odds about winning the championship
+         */
         public List<string> GetLeagueTableTop(List<England> allChampGames, int top, DateTime untilDate) {
 
             int victoryPoints = 3;

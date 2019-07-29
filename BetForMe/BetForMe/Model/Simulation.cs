@@ -20,14 +20,12 @@ namespace BetForMe.Model {
 
         //Result
         private double _finalBankroll = 0.0;
-
-        public int _totalBets = 0;
-        public int _betsWon = 0;
-        public int _betsLost = 0;
-        public double _wonPercentage = 0;
-        public double _lostPercentage = 0;
+        private int _totalBets = 0;
+        private int _betsWon = 0;
+        private int _betsLost = 0;
 
         public void Simulate() {
+            OnlyTopNteams = 5;
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
 
@@ -35,7 +33,7 @@ namespace BetForMe.Model {
                  *  - Championship
                  *  - Season
                  *  - Games (home, away, both)
-                 *  - other to come...
+                 *  - Only top N teams
                  */
 
                 string select = "SELECT * ";
@@ -75,7 +73,17 @@ namespace BetForMe.Model {
 
                 foreach (var gameDay in allGamesGrouped) {
                     var dateKey = gameDay.Key;
+
+                    List<string> todaysTop = _bh.GetLeagueTableTop(allGames, OnlyTopNteams, (DateTime)dateKey);
+
                     foreach (var game in gameDay) {
+
+                        if (OnlyTopNteams > 0 && todaysTop.Count > 0 &&
+                            (Games == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
+                            Games == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
+                                continue;
+                        }
+
 
                         double odd = _bh.GetOddForBookmaker(game, bookmakerOddsField);
 
@@ -147,7 +155,6 @@ namespace BetForMe.Model {
         }
 
         public string Message { get; set; }
-
         public string Championship { get; set; }
         public string Season { get; set; }
         public BetHelper.OddType Games { get; set; }
@@ -156,6 +163,7 @@ namespace BetForMe.Model {
         public double InitialBankroll { get; set; }
         public double BankrollToPlay { get; set; }
         public Bookmakers Bookmaker { get; set; }
+        public int OnlyTopNteams { get; set; } //consider if > 0
 
         protected void OnNotifyPropertyChanged([CallerMemberName] string memberName = "") {
             if (PropertyChanged != null) {
