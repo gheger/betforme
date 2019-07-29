@@ -76,6 +76,15 @@ namespace BetForMe.Helpers {
 
             topN = leagueTable.OrderByDescending(x => x.Value).Take(top).Select(s => s.Key).ToList<string>();
 
+            //When there is not enough game played, return the pre-season odds
+            if (topN.Count < top) {
+                string season = allChampGames.First().Season;
+
+                using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+                    return c.PreseasonOdds.Where(w => w.Season.Equals(season)).Select(s => s.TeamsList).First().Split(';').Take(top).ToList<string>();
+                }
+            }
+
             return topN;
         }
 

@@ -119,6 +119,9 @@
     <Compile Include="Model\England.cs">
       <DependentUpon>BetForMeDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\PreseasonOdds.cs">
+      <DependentUpon>BetForMeDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Simulation.cs" />
     <Compile Include="Resources\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

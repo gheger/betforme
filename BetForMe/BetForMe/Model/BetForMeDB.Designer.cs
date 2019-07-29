@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\dev\betforme\BetForMe\BetForMe\Model\BetForMeDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\git\BetForMe\BetForMe\BetForMe\Model\BetForMeDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

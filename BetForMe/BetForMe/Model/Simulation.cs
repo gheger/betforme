@@ -154,6 +154,16 @@ namespace BetForMe.Model {
            
         }
 
+        public int WinningStreak {
+            get { return 0; } //TODO GHE
+
+        }
+
+        public int LosingStreak {
+            get { return 0; } //TODO GHE
+
+        }
+
         public string Message { get; set; }
         public string Championship { get; set; }
         public string Season { get; set; }

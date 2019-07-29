@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\dev\betforme\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=C:\git\BetForMe\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bookmakers">
           <Key>
             <PropertyRef Name="ID" />
@@ -88,9 +88,19 @@
           <Property Name="PSCA" Type="real" />
           <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="PreseasonOdds">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Championship" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="Season" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+          <Property Name="TeamsList" Type="nvarchar" MaxLength="2147483647" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="BetForMeDBStoreContainer">
           <EntitySet Name="Bookmakers" EntityType="Self.Bookmakers" store:Type="Tables" />
           <EntitySet Name="England" EntityType="Self.England" store:Type="Tables" />
+          <EntitySet Name="PreseasonOdds" EntityType="Self.PreseasonOdds" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -99,6 +109,7 @@
         <EntityContainer Name="BetForMeDBContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="England" EntityType="BetForMeDB.England" />
           <EntitySet Name="Bookmakers" EntityType="BetForMeDB.Bookmakers" />
+          <EntitySet Name="PreseasonOdds" EntityType="BetForMeDB.PreseasonOdds" />
         </EntityContainer>
         <EntityType Name="England">
           <Key>
@@ -182,6 +193,15 @@
           <Property Name="Prefix" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="PreseasonOdds">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Championship" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Season" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="TeamsList" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -273,6 +293,16 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreseasonOdds">
+            <EntityTypeMapping TypeName="BetForMeDB.PreseasonOdds">
+              <MappingFragment StoreEntitySet="PreseasonOdds">
+                <ScalarProperty Name="TeamsList" ColumnName="TeamsList" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Championship" ColumnName="Championship" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
