@@ -31,7 +31,7 @@ namespace BetForMe.Model {
                 /* 1st step: find games that match criteria
                  *  - Championship
                  *  - Season
-                 *  - Games (home, away, both)
+                 *  - Game type (home, away, both)
                  *  - Only top N teams
                  */
 
@@ -42,7 +42,7 @@ namespace BetForMe.Model {
                 string whereMinOdd = "AND {2} >= {3} "; //Bookmaker odds field & MinOdd
                 string whereMaxOdd = "AND {2} <= {4} "; //Bookmaker odds field & MaxOdd
 
-                string bookmakerOddsField = string.Format("{0}{1}", Bookmaker.Prefix, (char)Games);
+                string bookmakerOddsField = string.Format("{0}{1}", Bookmaker.Prefix, (char)GameTypes);
 
                 //Check if generated bookmaker field exists
                 try {
@@ -79,8 +79,8 @@ namespace BetForMe.Model {
 
                         //If OnlyTopNteams param is set, limit games to these teams
                         if (OnlyTopNteams > 0 && todaysTop.Count > 0 &&
-                            (Games == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
-                            Games == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
+                            (GameTypes == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
+                            GameTypes == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
                                 continue;
                         }
 
@@ -89,7 +89,7 @@ namespace BetForMe.Model {
 
                         //Update stats
                         TotalBets++;
-                        if (_bh.IsGameWon(game, Games)) {
+                        if (_bh.IsGameWon(game, GameTypes)) {
                             BetsWon++;
                         } else {
                             BetsLost++;
@@ -97,7 +97,7 @@ namespace BetForMe.Model {
 
                         //Compute bet
                         var stake = (FinalBankroll * BankrollToPlay / 100);
-                        var betResult = _bh.CalculateBet(stake, odd, _bh.IsGameWon(game, Games));
+                        var betResult = _bh.CalculateBet(stake, odd, _bh.IsGameWon(game, GameTypes));
 
                         //Update bankroll
                         FinalBankroll -= stake;
@@ -157,7 +157,7 @@ namespace BetForMe.Model {
         public string Message { get; set; }
         public string Championship { get; set; }
         public string Season { get; set; }
-        public BetHelper.OddType Games { get; set; }
+        public BetHelper.OddType GameTypes { get; set; }
         public double MinOdd { get; set; }
         public double MaxOdd { get; set; }
         public double InitialBankroll { get; set; }

@@ -25,7 +25,7 @@ namespace BetForMe.ViewModels {
         private string _selectedChampionship;
         private string _selectedSeason;
         private Bookmakers _selectedBookmaker;
-        private BetHelper.OddType _selectedGames;
+        private BetHelper.OddType _selectedGameTypes;
         private Simulation _currentSimulation;
 
         private readonly double _defaultInitialBankroll = 100.0;
@@ -59,7 +59,7 @@ namespace BetForMe.ViewModels {
 
             LoadChampionships(); // = tables in the DB
             LoadSeasons();
-            LoadGames();
+            LoadGameTypes();
             LoadBookmakers();
 
             _isLoaded = true;
@@ -95,11 +95,11 @@ namespace BetForMe.ViewModels {
                 SelectedSeason = Seasons.Last();
             }
         }
-        private void LoadGames() {
+        private void LoadGameTypes() {
             foreach (BetHelper.OddType ot in Enum.GetValues(typeof(BetHelper.OddType))) {
-                Games.Add(ot);
+                GameTypes.Add(ot);
             }
-            SelectedGames = Games.Where(g => g.Equals(BetHelper.OddType.Home)).FirstOrDefault();
+            SelectedGameType = GameTypes.Where(g => g.Equals(BetHelper.OddType.Home)).FirstOrDefault();
         }
 
         private void LoadBookmakers() {
@@ -126,7 +126,7 @@ namespace BetForMe.ViewModels {
                 Championship = SelectedChampionship,
                 Season = SelectedSeason,
                 Bookmaker = SelectedBookmaker,
-                Games = SelectedGames,
+                GameTypes = SelectedGameType,
                 MinOdd = MinOdd,
                 MaxOdd = MaxOdd,
                 OnlyTopNteams = OnlyTopNteams,
@@ -160,7 +160,6 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
-
         public string SelectedChampionship {
             get { return _selectedChampionship; }
             set {
@@ -171,7 +170,6 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
-
         public string SelectedSeason {
             get { return _selectedSeason; }
             set {
@@ -182,7 +180,6 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
-
         public Bookmakers SelectedBookmaker {
             get { return _selectedBookmaker; }
             set {
@@ -193,32 +190,23 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
-
-        public BetHelper.OddType SelectedGames {
-            get { return _selectedGames; }
+        public BetHelper.OddType SelectedGameType {
+            get { return _selectedGameTypes; }
             set {
-                if (_selectedGames != value) {
-                    _selectedGames = value;
+                if (_selectedGameTypes != value) {
+                    _selectedGameTypes = value;
                     OnNotifyPropertyChanged();
                     ExecuteSimulateCommand();
                 }
             }
         }
-
         public double MinOdd { get; set; }
-
         public double MaxOdd { get; set; }
-
         public int OnlyTopNteams { get; set; }
-
         public double BankrollToPlay { get; set; }
-
         public IList<string> Championships { get; set; } = new List<string>();
-
         public IList<string> Seasons { get; set; } = new List<string>();
-
-        public IList<BetHelper.OddType> Games { get; set; } = new List<BetHelper.OddType>();
-
+        public IList<BetHelper.OddType> GameTypes { get; set; } = new List<BetHelper.OddType>();
         public IList<Bookmakers> Bookmakers { get; set; } = new List<Bookmakers>();
 
         #endregion Properties
