@@ -25,8 +25,7 @@ namespace BetForMe.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<England_18_19> England_18_19 { get; set; }
-        public virtual DbSet<Germany_18_19> Germany_18_19 { get; set; }
-        public virtual DbSet<Spain_18_19> Spain_18_19 { get; set; }
+        public virtual DbSet<England> England { get; set; }
+        public virtual DbSet<Bookmakers> Bookmakers { get; set; }
     }
 }

@@ -1,31 +1,101 @@
-﻿using System;
+﻿using BetForMe.Helpers;
+using log4net;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BetForMe.Model {
-    public class Simulation: INotifyPropertyChanged {
+    public class Simulation : INotifyPropertyChanged {
+
+        private readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private double _initialBankroll = 0.0;
+        private BetHelper _bh = new BetHelper();
+
+        //Result
         private double _finalBankroll = 0.0;
+
         public int _totalBets = 0;
         public int _betsWon = 0;
         public int _betsLost = 0;
         public double _wonPercentage = 0;
         public double _lostPercentage = 0;
-        
 
-        public double InitialBankroll {
-            get { return _initialBankroll; }
-            set {
-                if (_initialBankroll != value) {
-                    _initialBankroll = value;
-                    OnNotifyPropertyChanged();
+        public void Simulate() {
+
+            using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+
+                /* 1st step: find games that match criteria
+                 *  - Championship
+                 *  - Season
+                 *  - Games (home, away, both)
+                 *  - other to come...
+                 */
+
+                string select = "SELECT * ";
+                string from = "FROM {0} "; //Championship
+                string where = "WHERE 1=1 ";
+                string whereSeason = "AND season LIKE '{1}' "; //Season
+                string whereMinOdd = "AND {2} >= {3} "; //Bookmaker odds field & MinOdd
+                string whereMaxOdd = "AND {2} <= {4} "; //Bookmaker odds field & MaxOdd
+
+                string bookmakerOddsField = string.Format("{0}{1}", Bookmaker.Prefix, (char)Games);
+
+                //Check if generated bookmaker field exists
+                try {
+                    int nbOdds = c.Database.SqlQuery<int>(string.Format("SELECT count({0}) FROM {1} WHERE season LIKE '{2}';", bookmakerOddsField, Championship, Season)).First();
+                    _log.DebugFormat("{0} odds found for bookmaker {1} for season {2}", nbOdds, Bookmaker.Name, Season);
+                    //Okay, go ahead an do simulation
+                } catch (Exception ex) {
+                    _log.ErrorFormat("Bookmaker field not found: {0}", bookmakerOddsField);
+                    //Bookmaker does not exist! Abort simulation
+                    Message = string.Format("No odds found for this bookmaker ({0})", Bookmaker.Name);
+                    return;
+                }
+
+                //Build query
+                string query = string.Format(select + from + where + whereSeason + whereMinOdd + whereMaxOdd + ";", Championship, Season, bookmakerOddsField, MinOdd, MaxOdd);
+
+                var allGames = c.Database.SqlQuery<England>(query).ToList<England>();
+                var allGamesGrouped = allGames.GroupBy(g => g.Date);
+
+                /* 2nd step: simulate over the full season
+                 *  - With BK management (same BK for a game day)
+                 *  - Update stats
+                 *  - Update BK
+                 */
+
+                FinalBankroll = InitialBankroll;
+
+                foreach (var gameDay in allGamesGrouped) {
+                    var dateKey = gameDay.Key;
+                    foreach (var game in gameDay) {
+
+                        double odd = _bh.GetOddForBookmaker(game, bookmakerOddsField);
+
+                        //Update stats
+                        TotalBets++;
+                        if (_bh.IsGameWon(game, Games)) {
+                            BetsWon++;
+                        } else {
+                            BetsLost++;
+                        }
+
+                        //Compute bet
+                        var stake = (FinalBankroll * BankrollToPlay / 100);
+                        var betResult = _bh.CalculateBet(stake, odd, _bh.IsGameWon(game, Games));
+
+                        //Update bankroll
+                        FinalBankroll -= stake;
+                        FinalBankroll += betResult;
+
+                    }
                 }
             }
         }
@@ -75,6 +145,17 @@ namespace BetForMe.Model {
             get { return (double)(BetsLost * 100) / TotalBets; }
            
         }
+
+        public string Message { get; set; }
+
+        public string Championship { get; set; }
+        public string Season { get; set; }
+        public BetHelper.OddType Games { get; set; }
+        public double MinOdd { get; set; }
+        public double MaxOdd { get; set; }
+        public double InitialBankroll { get; set; }
+        public double BankrollToPlay { get; set; }
+        public Bookmakers Bookmaker { get; set; }
 
         protected void OnNotifyPropertyChanged([CallerMemberName] string memberName = "") {
             if (PropertyChanged != null) {
