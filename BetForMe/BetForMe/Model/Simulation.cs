@@ -24,6 +24,11 @@ namespace BetForMe.Model {
         private int _betsWon = 0;
         private int _betsLost = 0;
 
+        //Streak computing
+        private int _currentWinningStreak = 0;
+        private int _currentLosingStreak = 0;
+        private bool _wasLastGameWon = false;
+
         public void Simulate() {
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
@@ -84,16 +89,20 @@ namespace BetForMe.Model {
                                 continue;
                         }
 
-
                         double odd = _bh.GetOddForBookmaker(game, bookmakerOddsField);
 
                         //Update stats
                         TotalBets++;
-                        if (_bh.IsGameWon(game, GameTypes)) {
+
+                        bool isWon = _bh.IsGameWon(game, GameTypes);
+                        if (isWon) {
                             BetsWon++;
                         } else {
                             BetsLost++;
                         }
+
+                        //_log.DebugFormat("Game {0}", isWon ? "WON" : "lost");
+                        ComputeStreak(isWon);
 
                         //Compute bet
                         var stake = (FinalBankroll * BankrollToPlay / 100);
@@ -102,10 +111,30 @@ namespace BetForMe.Model {
                         //Update bankroll
                         FinalBankroll -= stake;
                         FinalBankroll += betResult;
-
                     }
                 }
             }
+        }
+
+        private void ComputeStreak(bool isWon) {
+            if (isWon && _wasLastGameWon) { //game is won and last was too!
+                _currentWinningStreak++;
+                _currentLosingStreak = 0;
+            } else if (!isWon && !_wasLastGameWon) { //game is lost and last was too!
+                _currentLosingStreak++;
+                _currentWinningStreak = 0;
+            } else if (isWon && !_wasLastGameWon) { //game is won and last was lost!
+                _currentWinningStreak = _currentLosingStreak = 0;
+                _currentWinningStreak++;
+            } else if (!isWon && _wasLastGameWon) { //game is lost and last was won!
+                _currentWinningStreak = _currentLosingStreak = 0;
+                _currentLosingStreak++;
+            }
+
+            _wasLastGameWon = isWon;
+
+            WinningStreak = (_currentWinningStreak > WinningStreak) ? _currentWinningStreak : WinningStreak;
+            LosingStreak = (_currentLosingStreak > LosingStreak) ? _currentLosingStreak : LosingStreak;
         }
 
         public double FinalBankroll {
@@ -155,13 +184,13 @@ namespace BetForMe.Model {
         }
 
         public int WinningStreak {
-            get { return 0; } //TODO GHE
-
+            get;
+            set;
         }
 
         public int LosingStreak {
-            get { return 0; } //TODO GHE
-
+            get;
+            set;
         }
 
         public string Message { get; set; }

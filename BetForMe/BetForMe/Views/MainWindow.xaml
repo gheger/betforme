@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         xmlns:resources="clr-namespace:BetForMe.Resources"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:helpers="clr-namespace:BetForMe.Helpers"
         Title="{x:Static resources:Resources.ApplicationTitle}"
         Height="545" Width="1000">
     <Window.Resources>
@@ -17,6 +18,13 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Foreground" Value="DarkGreen"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="stGreenText">
+            <Setter Property="Foreground" Value="DarkGreen"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="stRedText">
+            <Setter Property="Foreground" Value="Red"/>
+        </Style>
+        <helpers:TextBlockForegroundConverter x:Key="ColorConverter"/>
     </Window.Resources>        
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -133,29 +141,29 @@
                 <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentSimulation.InitialBankroll}"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="2" >Final bankroll:</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentSimulation.FinalBankroll, StringFormat=N2}"/>
+                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentSimulation.FinalBankroll, StringFormat=N2}" Foreground="{Binding CurrentSimulation, Converter={StaticResource ColorConverter}}"/>
 
                 <TextBlock Grid.Column="0" Grid.Row="3" >Total bets:</TextBlock>
                 <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding CurrentSimulation.TotalBets}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="4" >Bets won:</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource stGreenText}">Bets won:</TextBlock>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-                    <TextBlock Text="{Binding CurrentSimulation.BetsWon}" Margin="0,0,5,0"/>
-                    <TextBlock Text="{Binding CurrentSimulation.WonPercentage, StringFormat=({0:N2}%)}"/>
+                    <TextBlock Text="{Binding CurrentSimulation.BetsWon}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
+                    <TextBlock Text="{Binding CurrentSimulation.WonPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stGreenText}"/>
                 </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="5" >Winning streak:</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource stGreenText}">Winning streak:</TextBlock>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
-                    <TextBlock Text="{Binding CurrentSimulation.WinningStreak}" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding CurrentSimulation.WinningStreak}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
                 </StackPanel>
 
-                <TextBlock Grid.Column="0" Grid.Row="6" >Bets lost:</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource stRedText}">Bets lost:</TextBlock>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6">
-                    <TextBlock Text="{Binding CurrentSimulation.BetsLost}" Margin="0,0,5,0"/>
-                    <TextBlock Text="{Binding CurrentSimulation.LostPercentage, StringFormat=({0:N2}%)}"/>
+                    <TextBlock Text="{Binding CurrentSimulation.BetsLost}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
+                    <TextBlock Text="{Binding CurrentSimulation.LostPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stRedText}"/>
                 </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="7" >Losing streak:</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="7" Style="{StaticResource stRedText}">Losing streak:</TextBlock>
                 <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
-                    <TextBlock Text="{Binding CurrentSimulation.LosingStreak}" Margin="0,0,5,0"/>
+                    <TextBlock Text="{Binding CurrentSimulation.LosingStreak}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
                 </StackPanel>
 
                 <TextBlock Grid.Column="0" Grid.Row="8" >Message:</TextBlock>
