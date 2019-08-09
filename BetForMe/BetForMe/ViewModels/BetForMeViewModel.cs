@@ -33,16 +33,22 @@ namespace BetForMe.ViewModels {
         private readonly double _defaultMaxOdd = 1.6;
         private readonly int _defaultOnlyTopNteams = 0;
         private readonly double _defaultBankrollToPlay = 5.0; //in percent
+        private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Championship; //in percent
+        private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Season; //in percent
 
-        public ICommand SimulateCommand { get; private set; }
+        public ICommand SimulatationCommand { get; private set; }
+        public ICommand MatrixSimulationCommand { get; private set; }        
 
         public BetForMeViewModel() {
-            SimulateCommand = new ActionCommand(ExecuteSimulateCommand);
+            SimulatationCommand = new ActionCommand(ExecuteSimulatationCommand);
+            MatrixSimulationCommand = new ActionCommand(ExecuteMatrixSimulationCommand);
 
             MinOdd = _defaultMinOdd;
             MaxOdd = _defaultMaxOdd;
             BankrollToPlay = _defaultBankrollToPlay;
             OnlyTopNteams = _defaultOnlyTopNteams;
+            XSelection = _defaultXSelection;
+            YSelection = _defaultYSelection;
 
             //Check dababases availability
             try {
@@ -113,7 +119,7 @@ namespace BetForMe.ViewModels {
 
         #region Commands
 
-        private void ExecuteSimulateCommand() {
+        private void ExecuteSimulatationCommand() {
 
             //Allow to simulate only if everything is loaded
             if (!_isLoaded) {
@@ -137,6 +143,13 @@ namespace BetForMe.ViewModels {
             CurrentSimulation = sim;            
 
             StatusBarText = "Simulation done";
+        }
+
+        private void ExecuteMatrixSimulationCommand() {
+            //TODO GHE do implementation
+
+            //Use XSelection and YSelection
+
         }
 
         #endregion Commands
@@ -166,7 +179,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedChampionship != value) {
                     _selectedChampionship = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulateCommand();
+                    ExecuteSimulatationCommand();
                 }
             }
         }
@@ -176,7 +189,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedSeason != value) {
                     _selectedSeason = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulateCommand();
+                    ExecuteSimulatationCommand();
                 }
             }
         }
@@ -186,7 +199,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedBookmaker != value) {
                     _selectedBookmaker = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulateCommand();
+                    ExecuteSimulatationCommand();
                 }
             }
         }
@@ -196,7 +209,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedGameTypes != value) {
                     _selectedGameTypes = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulateCommand();
+                    ExecuteSimulatationCommand();
                 }
             }
         }
@@ -208,6 +221,8 @@ namespace BetForMe.ViewModels {
         public IList<string> Seasons { get; set; } = new List<string>();
         public IList<BetHelper.OddType> GameTypes { get; set; } = new List<BetHelper.OddType>();
         public IList<Bookmakers> Bookmakers { get; set; } = new List<Bookmakers>();
+        public BetHelper.XYSelection XSelection { get; set; }
+        public BetHelper.XYSelection YSelection { get; set; }
 
         #endregion Properties
     }

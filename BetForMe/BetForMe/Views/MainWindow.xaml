@@ -18,13 +18,24 @@
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Foreground" Value="DarkGreen"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="stTextBlockTitle2Style">
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontFamily" Value="Tahoma"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="DarkGreen"/>
+        </Style>
         <Style TargetType="TextBlock" x:Key="stGreenText">
             <Setter Property="Foreground" Value="DarkGreen"/>
         </Style>
         <Style TargetType="TextBlock" x:Key="stRedText">
             <Setter Property="Foreground" Value="Red"/>
         </Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
         <helpers:TextBlockForegroundConverter x:Key="ColorConverter"/>
+        <helpers:EnumMatchToBooleanConverter x:Key="EnumConverter"/>
     </Window.Resources>        
     <DockPanel>
         <ToolBarTray DockPanel.Dock="Top">
@@ -46,12 +57,16 @@
 
             <Grid Grid.Column="0" Margin="10">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
                     <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" /> <!-- x axis -->
+                    <ColumnDefinition Width="1*" /> <!-- y axis -->
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -65,54 +80,78 @@
 
                 <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" Style="{StaticResource stTextBlockTitleStyle}" Margin="0,0,0,10">Simulation parameters</TextBlock>
 
-                <TextBlock Grid.Column="0" Grid.Row="1">Championship:</TextBlock>
-                <ComboBox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding Championships}" SelectedItem="{Binding SelectedChampionship}"/>
+                <TextBlock Grid.Column="0" Grid.Row="1" Style="{StaticResource stTextBlockTitle2Style}" Margin="0,0,0,5">Game selection</TextBlock>
 
-                <TextBlock Grid.Column="0" Grid.Row="2">Season:</TextBlock>
-                <ComboBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Seasons}" SelectedItem="{Binding SelectedSeason}"/>
+                <TextBlock Grid.Column="0" Grid.Row="2">Championship:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="3" ItemsSource="{Binding Championships}" SelectedItem="{Binding SelectedChampionship}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="3">Bookmaker:</TextBlock>
-                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Bookmakers}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedBookmaker}"/>
+                <TextBlock Grid.Column="0" Grid.Row="3">Season:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding Seasons}" SelectedItem="{Binding SelectedSeason}"/>
+
+                <TextBlock Grid.Column="0" Grid.Row="4">Bookmaker:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Bookmakers}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedBookmaker}"/>
                 
-                <TextBlock Grid.Column="0" Grid.Row="4">Odds between</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="4" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
+                <TextBlock Grid.Column="0" Grid.Row="5">Odds between:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>                
-                <TextBlock Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center">and</TextBlock>                
-                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="4" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
+                <TextBlock Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center">and</TextBlock>                
+                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
 
-                <TextBlock Grid.Column="0" Grid.Row="5">Game type:</TextBlock>
-                <ComboBox Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" ItemsSource="{Binding GameTypes}" SelectedItem="{Binding SelectedGameType}"/>
+                <TextBlock Grid.Column="0" Grid.Row="6">Game type:</TextBlock>
+                <ComboBox Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" ItemsSource="{Binding GameTypes}" SelectedItem="{Binding SelectedGameType}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="6">Limit teams to top:</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" Increment="1"  Maximum="20" Value="{Binding OnlyTopNteams}">
+                <TextBlock Grid.Column="0" Grid.Row="7">Limit teams to top:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" Increment="1"  Maximum="20" Value="{Binding OnlyTopNteams}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
 
-                <TextBlock Grid.Column="0" Grid.Row="7">Bankroll to play [%]:</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" FormatString="F2" Increment="1" Maximum="100" Value="{Binding BankrollToPlay}">
+
+                <TextBlock Grid.Column="0" Grid.Row="8" Style="{StaticResource stTextBlockTitle2Style}" Margin="0,15,0,5">Betting settings</TextBlock>
+
+                <TextBlock Grid.Column="0" Grid.Row="9">Bankroll to play [%]:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" FormatString="F2" Increment="1" Maximum="100" Value="{Binding BankrollToPlay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulateCommand}" />
+                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
 
-                <Button Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="4" VerticalAlignment="Bottom" Command="{Binding SimulateCommand}">Simulate</Button>
+                <!-- x/y axis section -->
+                <TextBlock Grid.Column="4" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">x</TextBlock>
+                <TextBlock Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">y</TextBlock>
+                <RadioButton Name="championshipAsX" GroupName="x" Grid.Column="4" Grid.Row="2" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
+                <RadioButton Name="championshipAsY" GroupName="y" Grid.Column="5" Grid.Row="2" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
+                <RadioButton Name="seasonAsX" GroupName="x" Grid.Column="4" Grid.Row="3" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
+                <RadioButton Name="seasonAsY" GroupName="y" Grid.Column="5" Grid.Row="3" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
+                <RadioButton Name="bookmakerAsX" GroupName="x" Grid.Column="4" Grid.Row="4" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
+                <RadioButton Name="bookmakerAsY" GroupName="y" Grid.Column="5" Grid.Row="4" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
+                <RadioButton Name="oddsAsX" GroupName="x" Grid.Column="4" Grid.Row="5" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
+                <RadioButton Name="oddsAsY" GroupName="y" Grid.Column="5" Grid.Row="5" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
+                <RadioButton Name="gameTypeAsX" GroupName="x" Grid.Column="4" Grid.Row="6" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
+                <RadioButton Name="gameTypeAsY" GroupName="y" Grid.Column="5" Grid.Row="6" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
+                <RadioButton Name="topTeamsAsX" GroupName="x" Grid.Column="4" Grid.Row="7" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
+                <RadioButton Name="topTeamsAsY" GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
+
+                <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button VerticalAlignment="Bottom" Command="{Binding SimulatationCommand}">Simulation</Button>
+                    <Button VerticalAlignment="Bottom" Command="{Binding MatrixSimulationCommand}">Matrix simulation</Button>
+                </StackPanel>
 
             </Grid>
 

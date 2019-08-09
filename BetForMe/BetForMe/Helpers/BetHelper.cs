@@ -15,6 +15,15 @@ namespace BetForMe.Helpers {
             //Both = 'B'
         }
 
+        public enum XYSelection {
+            Championship,
+            Season,
+            Bookmaker,
+            Odds,
+            GameType,
+            TopTeams
+        }
+
         public double CalculateBet(double stake, double odd, bool isBetWon = true) {
             if(isBetWon) {
                 return stake * odd;
