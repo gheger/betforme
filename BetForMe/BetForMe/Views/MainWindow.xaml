@@ -219,7 +219,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tiMatrixSimulationResult" Header="Matrix simulation result">
-                    <!-- Defined in code-behind -->    
+                    <!-- https://svitla.com/blog/grid-with-dynamic-number-of-rows-and-columns-part-1 -->    
                 </TabItem>
             </TabControl>
         </Grid>

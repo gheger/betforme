@@ -29,6 +29,7 @@ namespace BetForMe.ViewModels {
         private Bookmakers _selectedBookmaker;
         private BetHelper.OddType _selectedGameTypes;
         private Simulation _currentSimulation;
+        private Simulation[,] _currentMatrixSimulation;
 
         private readonly double _defaultInitialBankroll = 100.0;
         private readonly double _defaultMinOdd = 1.25;
@@ -189,7 +190,7 @@ namespace BetForMe.ViewModels {
             GetXYobjects(XSelection, out xCoordinates, out xSize);
             GetXYobjects(YSelection, out yCoordinates, out ySize);
 
-            Simulation[,] simulations = new Simulation[xSize, ySize];
+            CurrentMatrixSimulation = new Simulation[xSize, ySize];
 
             // The array will be filled like this:
             // y
@@ -253,6 +254,17 @@ namespace BetForMe.ViewModels {
                 }
             }
         }
+
+        public Simulation[,] CurrentMatrixSimulation {
+            get { return _currentMatrixSimulation; }
+            set {
+                if (_currentMatrixSimulation != value) {
+                    _currentMatrixSimulation = value;
+                    OnNotifyPropertyChanged();
+                }
+            }
+        }
+
         public string SelectedChampionship {
             get { return _selectedChampionship; }
             set {
