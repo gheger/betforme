@@ -228,7 +228,7 @@ namespace BetForMe.ViewModels {
                     sim.Simulate();
 
                     //Save simulation
-                    simulations[x,y] = sim;
+                    CurrentMatrixSimulation[x,y] = sim;
                 }
             }            
         }
