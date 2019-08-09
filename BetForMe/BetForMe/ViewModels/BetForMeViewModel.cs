@@ -33,8 +33,8 @@ namespace BetForMe.ViewModels {
         private readonly double _defaultMaxOdd = 1.6;
         private readonly int _defaultOnlyTopNteams = 0;
         private readonly double _defaultBankrollToPlay = 5.0; //in percent
-        private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Championship; //in percent
-        private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Season; //in percent
+        private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Championship;
+        private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Season;
 
         public ICommand SimulatationCommand { get; private set; }
         public ICommand MatrixSimulationCommand { get; private set; }        
