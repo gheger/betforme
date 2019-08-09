@@ -115,6 +115,29 @@ namespace BetForMe.Model {
                 }
             }
         }
+        public void SetDynamicParameter(BetHelper.XYSelection selection, object coordinates, int i) {
+            switch (selection) {
+                case BetHelper.XYSelection.Championship:
+                    Championship = ((List<string>)coordinates)[i];
+                    break;
+                case BetHelper.XYSelection.Season:
+                    Season = ((List<string>)coordinates)[i];
+                    break;
+                case BetHelper.XYSelection.Bookmaker:
+                    Bookmaker = ((List<Bookmakers>)coordinates)[i];
+                    break;
+                case BetHelper.XYSelection.Odds:
+                    MinOdd = ((List<double>)coordinates).First(); //Min odd is always the first
+                    MaxOdd = ((List<double>)coordinates)[i];      //Max off is dynamic
+                    break;
+                case BetHelper.XYSelection.GameType:
+                    GameTypes = ((List<BetHelper.OddType>)coordinates)[i];
+                    break;
+                case BetHelper.XYSelection.TopTeams:
+                    OnlyTopNteams = ((List<int>)coordinates)[i];
+                    break;
+            }
+        }
 
         private void ComputeStreak(bool isWon) {
             if (isWon && _wasLastGameWon) { //game is won and last was too!

@@ -97,5 +97,17 @@ namespace BetForMe.Helpers {
             return topN;
         }
 
+        public IList<double> GetOddsCoordinates(double minOdd, double maxOdd, int nbCoordinates) {
+            IList<double> ret = new List<double>();
+
+            double step = (maxOdd - minOdd) / (nbCoordinates - 1);
+
+            for (double i = minOdd; i < maxOdd; i+=step) {
+                ret.Add(Math.Round(i, 2));
+            }
+            ret.Add(Math.Round(maxOdd, 2));
+
+            return ret;
+        }
     }
 }

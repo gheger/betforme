@@ -3,6 +3,7 @@ using BetForMe.Model;
 using log4net;
 using Microsoft.Expression.Interactivity.Core;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,6 +19,7 @@ namespace BetForMe.ViewModels {
         private readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private ResourceManager _rm = new ResourceManager("BetForMe.Resources.Resources", Assembly.GetExecutingAssembly());
+        private BetHelper _bh = new BetHelper();
 
         private bool _isLoaded = false;
 
@@ -40,7 +42,7 @@ namespace BetForMe.ViewModels {
         public ICommand MatrixSimulationCommand { get; private set; }        
 
         public BetForMeViewModel() {
-            SimulatationCommand = new ActionCommand(ExecuteSimulatationCommand);
+            SimulatationCommand = new ActionCommand(ExecuteSimulationCommand);
             MatrixSimulationCommand = new ActionCommand(ExecuteMatrixSimulationCommand);
 
             MinOdd = _defaultMinOdd;
@@ -82,7 +84,8 @@ namespace BetForMe.ViewModels {
                 WHERE 
                     type ='table' AND 
                     name NOT LIKE 'sqlite_%' AND
-                    name NOT LIKE 'Bookmakers';
+                    name NOT LIKE 'Bookmakers' AND
+                    name NOT LIKE 'PreseasonOdds';
             ";
 
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
@@ -119,7 +122,7 @@ namespace BetForMe.ViewModels {
 
         #region Commands
 
-        private void ExecuteSimulatationCommand() {
+        private void ExecuteSimulationCommand() {
 
             //Allow to simulate only if everything is loaded
             if (!_isLoaded) {
@@ -145,11 +148,88 @@ namespace BetForMe.ViewModels {
             StatusBarText = "Simulation done";
         }
 
+        private void GetXYobjects(BetHelper.XYSelection selection, out object coordinates, out int size) {
+            coordinates = null;
+            size = 0;
+            switch (selection) {
+                case BetHelper.XYSelection.Championship:
+                    coordinates = Championships;
+                    size = Championships.Count;
+                    break;
+                case BetHelper.XYSelection.Season:
+                    coordinates = Seasons;
+                    size = Seasons.Count;
+                    break;
+                case BetHelper.XYSelection.Bookmaker:
+                    coordinates = Bookmakers;
+                    size = Bookmakers.Count;
+                    break;
+                case BetHelper.XYSelection.Odds:
+                    coordinates = _bh.GetOddsCoordinates(MinOdd, MaxOdd, 10);
+                    size = 10;
+                    break;
+                case BetHelper.XYSelection.GameType:
+                    coordinates = GameTypes;
+                    size = GameTypes.Count;
+                    break;
+                case BetHelper.XYSelection.TopTeams:
+                    coordinates = Enumerable.Range(1, OnlyTopNteams).ToList<int>();
+                    size = OnlyTopNteams;
+                    break;
+            }            
+        }
+
         private void ExecuteMatrixSimulationCommand() {
-            //TODO GHE do implementation
 
-            //Use XSelection and YSelection
+            object xCoordinates = null;
+            object yCoordinates = null;
+            int xSize = 0;
+            int ySize = 0;
 
+            GetXYobjects(XSelection, out xCoordinates, out xSize);
+            GetXYobjects(YSelection, out yCoordinates, out ySize);
+
+            Simulation[,] simulations = new Simulation[xSize, ySize];
+
+            // The array will be filled like this:
+            // y
+            // ^
+            // |.. .. .. .. .. .. ..
+            // |.. .. .. .. .. .. ..
+            // |.. .. .. .. .. .. ..
+            // |14 .. .. .. .. .. ..
+            // |07 08 09 10 11 12 13
+            // |00 01 02 03 04 05 06
+            // ------------------------> x
+
+            for(int y = 0; y < ySize; y++) { //Take y values ...
+                for(int x = 0; x < xSize; x++) { //... over x axis
+                    //First, create any simulation with all parameters
+                    Simulation sim = new Simulation() {
+                        InitialBankroll = _defaultInitialBankroll,
+                        Championship = SelectedChampionship,
+                        Season = SelectedSeason,
+                        Bookmaker = SelectedBookmaker,
+                        GameTypes = SelectedGameType,
+                        MinOdd = MinOdd,
+                        MaxOdd = MaxOdd,
+                        OnlyTopNteams = OnlyTopNteams,
+                        BankrollToPlay = BankrollToPlay,
+                    };
+
+                    //Then set changing 'Y' parameter
+                    sim.SetDynamicParameter(YSelection, yCoordinates, y);
+
+                    //And finally set changing 'X' parameter
+                    sim.SetDynamicParameter(XSelection, xCoordinates, x);
+
+                    //Excuse simulation
+                    sim.Simulate();
+
+                    //Save simulation
+                    simulations[x,y] = sim;
+                }
+            }            
         }
 
         #endregion Commands
@@ -179,7 +259,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedChampionship != value) {
                     _selectedChampionship = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulatationCommand();
+                    ExecuteSimulationCommand();
                 }
             }
         }
@@ -189,7 +269,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedSeason != value) {
                     _selectedSeason = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulatationCommand();
+                    ExecuteSimulationCommand();
                 }
             }
         }
@@ -199,7 +279,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedBookmaker != value) {
                     _selectedBookmaker = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulatationCommand();
+                    ExecuteSimulationCommand();
                 }
             }
         }
@@ -209,7 +289,7 @@ namespace BetForMe.ViewModels {
                 if (_selectedGameTypes != value) {
                     _selectedGameTypes = value;
                     OnNotifyPropertyChanged();
-                    ExecuteSimulatationCommand();
+                    ExecuteSimulationCommand();
                 }
             }
         }

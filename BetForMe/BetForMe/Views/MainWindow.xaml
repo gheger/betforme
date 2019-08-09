@@ -55,6 +55,9 @@
                 <ColumnDefinition Width="6*" />
             </Grid.ColumnDefinitions>
 
+            <!-- **************************************************************************************************************************************************** -->
+            <!-- Simulation pane -->
+            <!-- **************************************************************************************************************************************************** -->
             <Grid Grid.Column="0" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*" />
@@ -135,18 +138,18 @@
                 <!-- x/y axis section -->
                 <TextBlock Grid.Column="4" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">x</TextBlock>
                 <TextBlock Grid.Column="5" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">y</TextBlock>
-                <RadioButton Name="championshipAsX" GroupName="x" Grid.Column="4" Grid.Row="2" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
-                <RadioButton Name="championshipAsY" GroupName="y" Grid.Column="5" Grid.Row="2" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
-                <RadioButton Name="seasonAsX" GroupName="x" Grid.Column="4" Grid.Row="3" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
-                <RadioButton Name="seasonAsY" GroupName="y" Grid.Column="5" Grid.Row="3" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
-                <RadioButton Name="bookmakerAsX" GroupName="x" Grid.Column="4" Grid.Row="4" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
-                <RadioButton Name="bookmakerAsY" GroupName="y" Grid.Column="5" Grid.Row="4" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
-                <RadioButton Name="oddsAsX" GroupName="x" Grid.Column="4" Grid.Row="5" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
-                <RadioButton Name="oddsAsY" GroupName="y" Grid.Column="5" Grid.Row="5" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
-                <RadioButton Name="gameTypeAsX" GroupName="x" Grid.Column="4" Grid.Row="6" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
-                <RadioButton Name="gameTypeAsY" GroupName="y" Grid.Column="5" Grid.Row="6" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
-                <RadioButton Name="topTeamsAsX" GroupName="x" Grid.Column="4" Grid.Row="7" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
-                <RadioButton Name="topTeamsAsY" GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="2" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="2" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Championship}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="3" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="3" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Season}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="4" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="4" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Bookmaker}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="5" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="5" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=Odds}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="6" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="6" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=GameType}"></RadioButton>
+                <RadioButton GroupName="x" Grid.Column="4" Grid.Row="7" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
+                <RadioButton GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
 
                 <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button VerticalAlignment="Bottom" Command="{Binding SimulatationCommand}">Simulation</Button>
@@ -157,59 +160,68 @@
 
             <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
-            <Grid Grid.Column="2" Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <!-- **************************************************************************************************************************************************** -->
+            <!-- Result pane -->
+            <!-- **************************************************************************************************************************************************** -->
+            <TabControl Grid.Column="2">
+                <TabItem Header="Simulation result">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource stTextBlockTitleStyle}" Margin="0,0,0,10">Simulation result</TextBlock>
+                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Style="{StaticResource stTextBlockTitleStyle}" Margin="0,0,0,10">Simulation result</TextBlock>
 
-                <TextBlock Grid.Column="0" Grid.Row="1" >Initial bankroll:</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentSimulation.InitialBankroll}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="1" >Initial bankroll:</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding CurrentSimulation.InitialBankroll}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="2" >Final bankroll:</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentSimulation.FinalBankroll, StringFormat=N2}" Foreground="{Binding CurrentSimulation, Converter={StaticResource ColorConverter}}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="2" >Final bankroll:</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentSimulation.FinalBankroll, StringFormat=N2}" Foreground="{Binding CurrentSimulation, Converter={StaticResource ColorConverter}}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="3" >Total bets:</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding CurrentSimulation.TotalBets}"/>
+                        <TextBlock Grid.Column="0" Grid.Row="3" >Total bets:</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding CurrentSimulation.TotalBets}"/>
 
-                <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource stGreenText}">Bets won:</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
-                    <TextBlock Text="{Binding CurrentSimulation.BetsWon}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
-                    <TextBlock Text="{Binding CurrentSimulation.WonPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stGreenText}"/>
-                </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource stGreenText}">Winning streak:</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
-                    <TextBlock Text="{Binding CurrentSimulation.WinningStreak}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
-                </StackPanel>
+                        <TextBlock Grid.Column="0" Grid.Row="4" Style="{StaticResource stGreenText}">Bets won:</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="4">
+                            <TextBlock Text="{Binding CurrentSimulation.BetsWon}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
+                            <TextBlock Text="{Binding CurrentSimulation.WonPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stGreenText}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="0" Grid.Row="5" Style="{StaticResource stGreenText}">Winning streak:</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5">
+                            <TextBlock Text="{Binding CurrentSimulation.WinningStreak}" Margin="0,0,5,0" Style="{StaticResource stGreenText}"/>
+                        </StackPanel>
 
-                <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource stRedText}">Bets lost:</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6">
-                    <TextBlock Text="{Binding CurrentSimulation.BetsLost}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
-                    <TextBlock Text="{Binding CurrentSimulation.LostPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stRedText}"/>
-                </StackPanel>
-                <TextBlock Grid.Column="0" Grid.Row="7" Style="{StaticResource stRedText}">Losing streak:</TextBlock>
-                <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
-                    <TextBlock Text="{Binding CurrentSimulation.LosingStreak}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
-                </StackPanel>
+                        <TextBlock Grid.Column="0" Grid.Row="6" Style="{StaticResource stRedText}">Bets lost:</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="6">
+                            <TextBlock Text="{Binding CurrentSimulation.BetsLost}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
+                            <TextBlock Text="{Binding CurrentSimulation.LostPercentage, StringFormat=({0:N2}%)}" Style="{StaticResource stRedText}"/>
+                        </StackPanel>
+                        <TextBlock Grid.Column="0" Grid.Row="7" Style="{StaticResource stRedText}">Losing streak:</TextBlock>
+                        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="7">
+                            <TextBlock Text="{Binding CurrentSimulation.LosingStreak}" Margin="0,0,5,0" Style="{StaticResource stRedText}"/>
+                        </StackPanel>
 
-                <TextBlock Grid.Column="0" Grid.Row="8" >Message:</TextBlock>
-                <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding CurrentSimulation.Message}"/>
-             
-            </Grid>
-            
+                        <TextBlock Grid.Column="0" Grid.Row="8" >Message:</TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="8" Text="{Binding CurrentSimulation.Message}"/>
+
+                    </Grid>
+                </TabItem>
+                <TabItem x:Name="tiMatrixSimulationResult" Header="Matrix simulation result">
+                    <!-- Defined in code-behind -->    
+                </TabItem>
+            </TabControl>
         </Grid>
     </DockPanel>
 </Window>

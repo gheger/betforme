@@ -49,5 +49,14 @@ namespace UnitTestBetForMe {
             CollectionAssert.AreEqual(topFive18_19computed, topFive18_19real);
 
         }
+
+        [TestMethod]
+        public void TestGetOddsCoordinates() {
+            IList<double> list = _betHelper.GetOddsCoordinates(1.3, 2.2, 10);
+
+            Assert.AreEqual(list.First(), 1.3);
+            Assert.AreEqual(list.Last(), 2.2);
+            Assert.AreEqual(list[5], 1.8);
+        }
     }
 }
