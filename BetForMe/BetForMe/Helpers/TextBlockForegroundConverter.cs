@@ -22,6 +22,8 @@ namespace BetForMe.Helpers {
 
             if (sim.FinalBankroll > sim.InitialBankroll) {
                 return Brushes.Green;
+            } else if (sim.FinalBankroll == 0) {
+                return Brushes.Black;
             } else {
                 return Brushes.Red;
             }

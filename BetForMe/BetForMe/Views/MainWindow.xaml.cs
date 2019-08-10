@@ -38,5 +38,13 @@ namespace BetForMe
             _viewModel = new BetForMeViewModel();
             DataContext = _viewModel;
         }
+
+        private void ButtonSimulation_Click(object sender, RoutedEventArgs e) {
+            tiSimulationResult.IsSelected = true;
+        }
+
+        private void ButtonMatrixSimulation_Click(object sender, RoutedEventArgs e) {
+            tiMatrixSimulationResult.IsSelected = true;
+        }
     }
 }

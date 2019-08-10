@@ -107,11 +107,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\EnumMatchToBooleanConverter.cs" />
+    <Compile Include="Views\MatrixSimulationResultView.xaml.cs">
+      <DependentUpon>MatrixSimulationResultView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Helpers\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Helpers\TextBlockForegroundConverter.cs" />
     <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Helpers\BetHelper.cs" />
@@ -155,6 +158,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MatrixSimulationResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -9,6 +9,7 @@
         xmlns:resources="clr-namespace:BetForMe.Resources"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:helpers="clr-namespace:BetForMe.Helpers"
+        xmlns:views="clr-namespace:BetForMe.Views"
         Title="{x:Static resources:Resources.ApplicationTitle}"
         Height="545" Width="1000">
     <Window.Resources>
@@ -152,8 +153,8 @@
                 <RadioButton GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
 
                 <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button VerticalAlignment="Bottom" Command="{Binding SimulatationCommand}">Simulation</Button>
-                    <Button VerticalAlignment="Bottom" Command="{Binding MatrixSimulationCommand}">Matrix simulation</Button>
+                    <Button VerticalAlignment="Bottom" Command="{Binding SimulatationCommand}" Click="ButtonSimulation_Click">Simulation</Button>
+                    <Button VerticalAlignment="Bottom" Command="{Binding MatrixSimulationCommand}" Click="ButtonMatrixSimulation_Click">Matrix simulation</Button>
                 </StackPanel>
 
             </Grid>
@@ -164,7 +165,7 @@
             <!-- Result pane -->
             <!-- **************************************************************************************************************************************************** -->
             <TabControl Grid.Column="2">
-                <TabItem Header="Simulation result">
+                <TabItem  x:Name="tiSimulationResult" Header="Simulation result">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*" />
@@ -219,7 +220,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tiMatrixSimulationResult" Header="Matrix simulation result">
-                    <!-- https://svitla.com/blog/grid-with-dynamic-number-of-rows-and-columns-part-1 -->    
+                    <DockPanel>
+                        <views:MatrixSimulationResultView x:Name="DynamicGridView" DataContext="{Binding}"/>
+                    </DockPanel>
                 </TabItem>
             </TabControl>
         </Grid>

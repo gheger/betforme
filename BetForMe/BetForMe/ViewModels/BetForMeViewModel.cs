@@ -5,6 +5,7 @@ using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -29,15 +30,17 @@ namespace BetForMe.ViewModels {
         private Bookmakers _selectedBookmaker;
         private BetHelper.OddType _selectedGameTypes;
         private Simulation _currentSimulation;
-        private Simulation[,] _currentMatrixSimulation;
+        private ObservableCollection<ObservableCollection<Simulation>> _currentMatrixSimulation;
+        private List<string> _currentMatrixSimulationHeadersX;
+        private List<string> _currentMatrixSimulationHeadersY;
 
         private readonly double _defaultInitialBankroll = 100.0;
         private readonly double _defaultMinOdd = 1.25;
         private readonly double _defaultMaxOdd = 1.6;
         private readonly int _defaultOnlyTopNteams = 0;
         private readonly double _defaultBankrollToPlay = 5.0; //in percent
-        private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Championship;
-        private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Season;
+        private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Season;
+        private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Bookmaker;
 
         public ICommand SimulatationCommand { get; private set; }
         public ICommand MatrixSimulationCommand { get; private set; }        
@@ -149,35 +152,38 @@ namespace BetForMe.ViewModels {
             StatusBarText = "Simulation done";
         }
 
-        private void GetXYobjects(BetHelper.XYSelection selection, out object coordinates, out int size) {
+        private List<string> GetXYobjects(BetHelper.XYSelection selection, out object coordinates, out int size) {
             coordinates = null;
             size = 0;
             switch (selection) {
                 case BetHelper.XYSelection.Championship:
                     coordinates = Championships;
                     size = Championships.Count;
-                    break;
+                    return (List<string>)Championships;
                 case BetHelper.XYSelection.Season:
                     coordinates = Seasons;
                     size = Seasons.Count;
-                    break;
+                    return (List<string>)Seasons;
                 case BetHelper.XYSelection.Bookmaker:
                     coordinates = Bookmakers;
                     size = Bookmakers.Count;
-                    break;
+                    return Bookmakers.Select(b => b.Name).ToList<string>();
                 case BetHelper.XYSelection.Odds:
-                    coordinates = _bh.GetOddsCoordinates(MinOdd, MaxOdd, 10);
+                    var listOfOdds =  _bh.GetOddsCoordinates(MinOdd, MaxOdd, 10);
+                    coordinates = listOfOdds;
                     size = 10;
-                    break;
+                    return listOfOdds.Select(l => l.ToString()).ToList<string>();
                 case BetHelper.XYSelection.GameType:
                     coordinates = GameTypes;
                     size = GameTypes.Count;
-                    break;
+                    return GameTypes.Select(g => g.ToString()).ToList<string>();
                 case BetHelper.XYSelection.TopTeams:
-                    coordinates = Enumerable.Range(1, OnlyTopNteams).ToList<int>();
+                    var listTopTeams = Enumerable.Range(1, OnlyTopNteams).ToList<int>();
+                    coordinates = listTopTeams;
                     size = OnlyTopNteams;
-                    break;
-            }            
+                    return listTopTeams.Select(tt => tt.ToString()).ToList<string>();
+            }
+            return new List<string>();
         }
 
         private void ExecuteMatrixSimulationCommand() {
@@ -187,10 +193,10 @@ namespace BetForMe.ViewModels {
             int xSize = 0;
             int ySize = 0;
 
-            GetXYobjects(XSelection, out xCoordinates, out xSize);
-            GetXYobjects(YSelection, out yCoordinates, out ySize);
+            CurrentMatrixSimulationHeadersX = GetXYobjects(XSelection, out xCoordinates, out xSize);
+            CurrentMatrixSimulationHeadersY = GetXYobjects(YSelection, out yCoordinates, out ySize);
 
-            CurrentMatrixSimulation = new Simulation[xSize, ySize];
+            CurrentMatrixSimulation = new ObservableCollection<ObservableCollection<Simulation>>();
 
             // The array will be filled like this:
             // y
@@ -204,7 +210,9 @@ namespace BetForMe.ViewModels {
             // ------------------------> x
 
             for(int y = 0; y < ySize; y++) { //Take y values ...
-                for(int x = 0; x < xSize; x++) { //... over x axis
+                CurrentMatrixSimulation.Add(new ObservableCollection<Simulation>());
+
+                for (int x = 0; x < xSize; x++) { //... over x axis
                     //First, create any simulation with all parameters
                     Simulation sim = new Simulation() {
                         InitialBankroll = _defaultInitialBankroll,
@@ -228,9 +236,9 @@ namespace BetForMe.ViewModels {
                     sim.Simulate();
 
                     //Save simulation
-                    CurrentMatrixSimulation[x,y] = sim;
+                    CurrentMatrixSimulation[y].Add(sim);
                 }
-            }            
+            }
         }
 
         #endregion Commands
@@ -255,7 +263,27 @@ namespace BetForMe.ViewModels {
             }
         }
 
-        public Simulation[,] CurrentMatrixSimulation {
+        public List<string> CurrentMatrixSimulationHeadersX {
+            get { return _currentMatrixSimulationHeadersX; }
+            set {
+                if (_currentMatrixSimulationHeadersX != value) {
+                    _currentMatrixSimulationHeadersX = value;
+                    OnNotifyPropertyChanged();
+                }
+            }
+        }
+
+        public List<string> CurrentMatrixSimulationHeadersY {
+            get { return _currentMatrixSimulationHeadersY; }
+            set {
+                if (_currentMatrixSimulationHeadersY != value) {
+                    _currentMatrixSimulationHeadersY = value;
+                    OnNotifyPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<ObservableCollection<Simulation>> CurrentMatrixSimulation {
             get { return _currentMatrixSimulation; }
             set {
                 if (_currentMatrixSimulation != value) {
