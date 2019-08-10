@@ -180,6 +180,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BetForMeDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="data\BetForMeDB.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Model\BetForMeDB.edmx.diagram">
       <DependentUpon>BetForMeDB.edmx</DependentUpon>
     </None>
