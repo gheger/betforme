@@ -178,6 +178,9 @@ namespace BetForMe.ViewModels {
                     size = GameTypes.Count;
                     return GameTypes.Select(g => g.ToString()).ToList<string>();
                 case BetHelper.XYSelection.TopTeams:
+                    if (OnlyTopNteams == 0) {
+                        OnlyTopNteams = 20;
+                    }
                     var listTopTeams = Enumerable.Range(1, OnlyTopNteams).ToList<int>();
                     coordinates = listTopTeams;
                     size = OnlyTopNteams;
