@@ -20,7 +20,7 @@ namespace BetForMe.Helpers {
 
             Simulation sim = (Simulation)value;
 
-            if (sim.FinalBankroll > sim.InitialBankroll) {
+            if (sim.FinalBankroll >= sim.InitialBankroll) {
                 return Brushes.Green;
             } else if (sim.FinalBankroll == 0) {
                 return Brushes.Black;

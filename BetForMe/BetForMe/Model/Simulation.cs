@@ -64,7 +64,7 @@ namespace BetForMe.Model {
                 //Build query
                 string query = string.Format(select + from + where + whereSeason + whereMinOdd + whereMaxOdd + ";", Championship, Season, bookmakerOddsField, MinOdd, MaxOdd);
 
-                var allGames = c.Database.SqlQuery<England>(query).ToList<England>();
+                var allGames = c.Database.SqlQuery<Game>(query).ToList<Game>();
                 var allGamesGrouped = allGames.GroupBy(g => g.Date);
 
                 /* 2nd step: simulate over the full season
@@ -78,7 +78,7 @@ namespace BetForMe.Model {
                 foreach (var gameDay in allGamesGrouped) {
                     var dateKey = gameDay.Key;
 
-                    List<string> todaysTop = _bh.GetLeagueTableTop(allGames, OnlyTopNteams, (DateTime)dateKey);
+                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, allGames, OnlyTopNteams, (DateTime)dateKey);
 
                     foreach (var game in gameDay) {
 

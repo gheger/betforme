@@ -27,20 +27,20 @@ namespace UnitTestBetForMe {
             List<string> topFive17_18real = new List<string> { "Man City", "Man United", "Tottenham", "Liverpool", "Chelsea" };
             List<string> topFive18_19real = new List<string> { "Man City", "Liverpool", "Chelsea", "Tottenham", "Arsenal" };
 
-            List<England> allGames14_15, allGames15_16, allGames16_17, allGames17_18, allGames18_19;
+            List<Game> allGames14_15, allGames15_16, allGames16_17, allGames17_18, allGames18_19;
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
-                allGames14_15 = c.Database.SqlQuery<England>("select * from England where season like '2014-2015';").ToList<England>();
-                allGames15_16 = c.Database.SqlQuery<England>("select * from England where season like '2015-2016';").ToList<England>();
-                allGames16_17 = c.Database.SqlQuery<England>("select * from England where season like '2016-2017';").ToList<England>();
-                allGames17_18 = c.Database.SqlQuery<England>("select * from England where season like '2017-2018';").ToList<England>();
-                allGames18_19 = c.Database.SqlQuery<England>("select * from England where season like '2018-2019';").ToList<England>();
+                allGames14_15 = c.Database.SqlQuery<Game>("select * from England where season like '2014-2015';").ToList<Game>();
+                allGames15_16 = c.Database.SqlQuery<Game>("select * from England where season like '2015-2016';").ToList<Game>();
+                allGames16_17 = c.Database.SqlQuery<Game>("select * from England where season like '2016-2017';").ToList<Game>();
+                allGames17_18 = c.Database.SqlQuery<Game>("select * from England where season like '2017-2018';").ToList<Game>();
+                allGames18_19 = c.Database.SqlQuery<Game>("select * from England where season like '2018-2019';").ToList<Game>();
             }
 
-            List<string> topFive14_15computed = _betHelper.GetLeagueTableTop(allGames14_15, 5, new DateTime(2015, 06, 01));
-            List<string> topFive15_16computed = _betHelper.GetLeagueTableTop(allGames15_16, 5, new DateTime(2016, 06, 01));
-            List<string> topFive16_17computed = _betHelper.GetLeagueTableTop(allGames16_17, 5, new DateTime(2017, 06, 01));
-            List<string> topFive17_18computed = _betHelper.GetLeagueTableTop(allGames17_18, 5, new DateTime(2018, 06, 01));
-            List<string> topFive18_19computed = _betHelper.GetLeagueTableTop(allGames18_19, 5, new DateTime(2019, 06, 01));
+            List<string> topFive14_15computed = _betHelper.GetLeagueTableTop("England", allGames14_15, 5, new DateTime(2015, 06, 01));
+            List<string> topFive15_16computed = _betHelper.GetLeagueTableTop("England", allGames15_16, 5, new DateTime(2016, 06, 01));
+            List<string> topFive16_17computed = _betHelper.GetLeagueTableTop("England", allGames16_17, 5, new DateTime(2017, 06, 01));
+            List<string> topFive17_18computed = _betHelper.GetLeagueTableTop("England", allGames17_18, 5, new DateTime(2018, 06, 01));
+            List<string> topFive18_19computed = _betHelper.GetLeagueTableTop("England", allGames18_19, 5, new DateTime(2019, 06, 01));
 
             CollectionAssert.AreEqual(topFive14_15computed, topFive14_15real);
             CollectionAssert.AreEqual(topFive15_16computed, topFive15_16real);

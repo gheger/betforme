@@ -108,6 +108,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\EnumMatchToBooleanConverter.cs" />
+    <Compile Include="Model\Game.cs" />
+    <Compile Include="Model\Spain.cs">
+      <DependentUpon>BetForMeDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Views\SimulationResultView.xaml.cs">
       <DependentUpon>SimulationResultView.xaml</DependentUpon>
     </Compile>

@@ -36,7 +36,7 @@ namespace BetForMe.Helpers {
             return (double)obj.GetType().GetProperty(oddField).GetValue(obj, null);
         }
 
-        public bool IsGameWon(England game, BetHelper.OddType oddType) {
+        public bool IsGameWon(Game game, BetHelper.OddType oddType) {
             if (oddType == OddType.Home) {
                 return game.FTR.Equals("H");
             } else if (oddType == OddType.Away) {
@@ -52,7 +52,7 @@ namespace BetForMe.Helpers {
          * TODO GHE
          * Possible improvement: at the start of the season, return the teams with the lowest odds about winning the championship
          */
-        public List<string> GetLeagueTableTop(List<England> allChampGames, int top, DateTime untilDate) {
+        public List<string> GetLeagueTableTop(string championship, List<Game> allChampGames, int top, DateTime untilDate) {
 
             int victoryPoints = 3;
             int drawPoints = 1;
@@ -89,9 +89,11 @@ namespace BetForMe.Helpers {
             if (topN.Count < top) {
                 string season = allChampGames.First().Season;
 
-                using (BetForMeDBContainer c = new BetForMeDBContainer()) {
-                    return c.PreseasonOdds.Where(w => w.Season.Equals(season)).Select(s => s.TeamsList).First().Split(';').Take(top).ToList<string>();
-                }
+                try {
+                    using (BetForMeDBContainer c = new BetForMeDBContainer()) {
+                        return c.PreseasonOdds.Where(w => w.Season.Equals(season) && w.Championship.Equals(championship)).Select(s => s.TeamsList).First().Split(';').Take(top).ToList<string>();
+                    }
+                } catch (Exception ex) { }
             }
 
             return topN;
