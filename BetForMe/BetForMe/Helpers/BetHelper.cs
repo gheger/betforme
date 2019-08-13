@@ -12,7 +12,7 @@ namespace BetForMe.Helpers {
             Home = 'H',
             Away = 'A',
             //Draw = 'D', //not used yet
-            //Both = 'B'
+            Both = 'B'
         }
 
         public enum XYSelection {

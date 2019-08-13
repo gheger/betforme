@@ -35,8 +35,8 @@ namespace BetForMe.ViewModels {
         private List<string> _currentMatrixSimulationHeadersY;
 
         private readonly double _defaultInitialBankroll = 100.0;
-        private readonly double _defaultMinOdd = 1.25;
-        private readonly double _defaultMaxOdd = 1.6;
+        private readonly double _defaultMinOdd = 1.1;
+        private readonly double _defaultMaxOdd = 1.7;
         private readonly int _defaultOnlyTopNteams = 0;
         private readonly double _defaultBankrollToPlay = 5.0; //in percent
         private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Season;

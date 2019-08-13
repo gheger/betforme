@@ -47,6 +47,10 @@ namespace BetForMe.Model {
                 string whereMinOdd = "AND {2} >= {3} "; //Bookmaker odds field & MinOdd
                 string whereMaxOdd = "AND {2} <= {4} "; //Bookmaker odds field & MaxOdd
 
+                if (GameTypes == BetHelper.OddType.Both) {
+                    //TODO Finish implementation GHE
+                }
+
                 string bookmakerOddsField = string.Format("{0}{1}", Bookmaker.Prefix, (char)GameTypes);
 
                 //Check if generated bookmaker field exists

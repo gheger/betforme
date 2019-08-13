@@ -123,7 +123,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Helpers\TextBlockForegroundConverter.cs" />
-    <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Helpers\BetHelper.cs" />
     <Compile Include="Model\Bookmakers.cs">
       <DependentUpon>BetForMeDB.tt</DependentUpon>
@@ -192,7 +191,7 @@
       <LastGenOutput>BetForMeDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="data\BetForMeDB.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Model\BetForMeDB.edmx.diagram">
       <DependentUpon>BetForMeDB.edmx</DependentUpon>
@@ -234,4 +233,7 @@
     <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
   </Target>
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /Y "$(SolutionDir)..\data\BetForMeDB.db" "$(ProjectDir)\data"</PreBuildEvent>
+  </PropertyGroup>
 </Project>
