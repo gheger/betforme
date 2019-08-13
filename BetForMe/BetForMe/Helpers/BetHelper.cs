@@ -32,11 +32,28 @@ namespace BetForMe.Helpers {
             }
         }
 
-        public double GetOddForBookmaker(object obj, string oddField) {
-            return (double)obj.GetType().GetProperty(oddField).GetValue(obj, null);
+        public double GetOddForBookmaker(object obj, string bookmakerPrefix, OddType gameType, out OddType whichOdd) {
+            switch (gameType) {
+                case OddType.Home:
+                case OddType.Away:
+                    whichOdd = gameType;
+                    return (double)obj.GetType().GetProperty(bookmakerPrefix + (char)gameType).GetValue(obj, null);
+                case OddType.Both:
+                    double homeOdd = (double)obj.GetType().GetProperty(bookmakerPrefix + (char)OddType.Home).GetValue(obj, null);
+                    double awayOdd = (double)obj.GetType().GetProperty(bookmakerPrefix + (char)OddType.Away).GetValue(obj, null);
+                    if (homeOdd < awayOdd) {
+                        whichOdd = OddType.Home;
+                    } else {
+                        whichOdd = OddType.Away;
+                    }
+                    return Math.Min(homeOdd, awayOdd);
+                default: //not possible
+                    whichOdd = OddType.Both;
+                    return 0.0;
+            }
         }
 
-        public bool IsGameWon(Game game, BetHelper.OddType oddType) {
+        public bool IsGameWon(Game game, OddType oddType) {
             if (oddType == OddType.Home) {
                 return game.FTR.Equals("H");
             } else if (oddType == OddType.Away) {

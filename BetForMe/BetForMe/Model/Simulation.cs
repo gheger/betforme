@@ -44,14 +44,24 @@ namespace BetForMe.Model {
                 string from = "FROM {0} "; //Championship
                 string where = "WHERE 1=1 ";
                 string whereSeason = "AND season LIKE '{1}' "; //Season
-                string whereMinOdd = "AND {2} >= {3} "; //Bookmaker odds field & MinOdd
-                string whereMaxOdd = "AND {2} <= {4} "; //Bookmaker odds field & MaxOdd
 
-                if (GameTypes == BetHelper.OddType.Both) {
-                    //TODO Finish implementation GHE
-                }
-
+                string whereMinOdd = string.Empty; //Bookmaker odds field & MinOdd
+                string whereMaxOdd = string.Empty; //Bookmaker odds field & MaxOdd
                 string bookmakerOddsField = string.Format("{0}{1}", Bookmaker.Prefix, (char)GameTypes);
+                string bookmakerOddsHomeField = string.Format("{0}{1}", Bookmaker.Prefix, (char)BetHelper.OddType.Home);
+                string bookmakerOddsAwayField = string.Format("{0}{1}", Bookmaker.Prefix, (char)BetHelper.OddType.Away);
+                switch (GameTypes) {
+                    case BetHelper.OddType.Home:
+                    case BetHelper.OddType.Away:
+                        whereMinOdd += "AND " + bookmakerOddsField + " >= {3} ";
+                        whereMaxOdd += "AND " + bookmakerOddsField + " <= {4} ";
+                        break;
+                    case BetHelper.OddType.Both:
+                        whereMinOdd += "AND ((" + bookmakerOddsHomeField + " >= {3} AND " + bookmakerOddsHomeField + " <= {4}) ";
+                        whereMaxOdd += "OR (" + bookmakerOddsAwayField + " >= {3} AND " + bookmakerOddsAwayField + " <= {4})) ";
+                        bookmakerOddsField = bookmakerOddsHomeField; //because 'B' odds does not exist
+                        break;
+                }
 
                 //Check if generated bookmaker field exists
                 try {
@@ -86,19 +96,21 @@ namespace BetForMe.Model {
 
                     foreach (var game in gameDay) {
 
+                        //Get the odd and on which game the bet must be placed
+                        BetHelper.OddType whichOdd = BetHelper.OddType.Both;
+                        double odd = _bh.GetOddForBookmaker(game, Bookmaker.Prefix, GameTypes, out whichOdd);
+
                         //If OnlyTopNteams param is set, limit games to these teams
                         if (OnlyTopNteams > 0 && todaysTop.Count > 0 &&
-                            (GameTypes == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
-                            GameTypes == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
+                            (whichOdd == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
+                            whichOdd == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
                                 continue;
                         }
-
-                        double odd = _bh.GetOddForBookmaker(game, bookmakerOddsField);
 
                         //Update stats
                         TotalBets++;
 
-                        bool isWon = _bh.IsGameWon(game, GameTypes);
+                        bool isWon = _bh.IsGameWon(game, whichOdd);
                         if (isWon) {
                             BetsWon++;
                         } else {
@@ -110,7 +122,7 @@ namespace BetForMe.Model {
 
                         //Compute bet
                         var stake = (FinalBankroll * BankrollToPlay / 100);
-                        var betResult = _bh.CalculateBet(stake, odd, _bh.IsGameWon(game, GameTypes));
+                        var betResult = _bh.CalculateBet(stake, odd, isWon);
 
                         //Update bankroll
                         FinalBankroll -= stake;
