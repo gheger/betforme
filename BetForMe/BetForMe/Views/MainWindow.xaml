@@ -101,7 +101,7 @@
                 <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
+                            <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>                
@@ -109,7 +109,7 @@
                 <xctk:DoubleUpDown Grid.Column="3" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
+                            <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
@@ -121,11 +121,10 @@
                 <xctk:DoubleUpDown Grid.Column="1" Grid.Row="7" Grid.ColumnSpan="3" Increment="1"  Maximum="20" Value="{Binding OnlyTopNteams}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
+                            <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
-
 
                 <TextBlock Grid.Column="0" Grid.Row="8" Style="{StaticResource stTextBlockTitle2Style}" Margin="0,15,0,5">Betting settings</TextBlock>
 
@@ -133,7 +132,7 @@
                 <xctk:DoubleUpDown Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" FormatString="F2" Increment="1" Maximum="100" Value="{Binding BankrollToPlay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
-                            <i:InvokeCommandAction  Command="{Binding SimulatationCommand}" />
+                            <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>

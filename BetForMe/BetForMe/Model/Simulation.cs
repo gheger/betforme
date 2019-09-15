@@ -1,5 +1,6 @@
 ﻿using BetForMe.Helpers;
 using log4net;
+using Microsoft.Expression.Interactivity.Core;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace BetForMe.Model {
     public class Simulation : INotifyPropertyChanged {
@@ -28,6 +31,20 @@ namespace BetForMe.Model {
         private int _currentWinningStreak = 0;
         private int _currentLosingStreak = 0;
         private bool _wasLastGameWon = false;
+
+        //CSV export
+        private string csvExport = string.Empty;
+        private string csvHeader = "Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway;Bankroll";
+
+        //Commands
+        public ICommand CopyGamesInClipboardCommand { get; private set; }
+
+        public Simulation() {
+            CopyGamesInClipboardCommand = new ActionCommand(ExecuteCopyGamesInClipboardCommand);
+        }
+        private void ExecuteCopyGamesInClipboardCommand() {
+            Clipboard.SetText(csvHeader + Environment.NewLine + csvExport);
+        }
 
         public void Simulate() {
 
@@ -127,10 +144,19 @@ namespace BetForMe.Model {
                         //Update bankroll
                         FinalBankroll -= stake;
                         FinalBankroll += betResult;
+
+                        //Add game in CSV export
+                        AddGameToCSVExport(game, whichOdd, odd, isWon, FinalBankroll);
                     }
                 }
             }
         }
+
+        private void AddGameToCSVExport(Game game, BetHelper.OddType oddType, double odd, bool isWon, double bankroll) {
+            //Format: Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway
+            csvExport += oddType + ";" + odd + ";" + (isWon ? "Won" : "Lost") + ";" + game.HomeTeam + ";" + game.AwayTeam + ";" + game.FTHG + ";" + game.FTAG + ";" + bankroll + Environment.NewLine;
+        }
+
         public void SetDynamicParameter(BetHelper.XYSelection selection, object coordinates, int i) {
             switch (selection) {
                 case BetHelper.XYSelection.Championship:

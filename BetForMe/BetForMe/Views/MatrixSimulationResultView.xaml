@@ -10,14 +10,19 @@
     <UserControl.Resources>
         <helpers:TextBlockForegroundConverter x:Key="ColorConverter"/>
         <DataTemplate x:Key="DataTemplate_Level2">
-            <!--<views:SimulationResultView DataContext="{Binding}"/>-->
             <TextBlock Text="{Binding FinalBankroll, StringFormat=N2}" Foreground="{Binding Converter={StaticResource ColorConverter}}" Margin="4,4,4,4" Width="100" Height="20" FontSize="16">
                 <TextBlock.ToolTip>
                     <ToolTip>
                         <views:SimulationResultView DataContext="{Binding}"/>
                     </ToolTip>
                 </TextBlock.ToolTip>
+                <TextBlock.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Copy games list in clipboard" Command="{Binding CopyGamesInClipboardCommand}" />
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
             </TextBlock>
+            
         </DataTemplate>
 
         <DataTemplate x:Key="DataTemplate_Level1">

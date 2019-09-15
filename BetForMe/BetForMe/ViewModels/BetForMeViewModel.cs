@@ -37,13 +37,15 @@ namespace BetForMe.ViewModels {
         private readonly double _defaultInitialBankroll = 100.0;
         private readonly double _defaultMinOdd = 1.1;
         private readonly double _defaultMaxOdd = 1.7;
-        private readonly int _defaultOnlyTopNteams = 0;
-        private readonly double _defaultBankrollToPlay = 5.0; //in percent
+        private readonly int _defaultOnlyTopNteams = 3;
+        private readonly double _defaultBankrollToPlay = 10.0; //in percent
+        private readonly string _defaultChampionship = "England";
+        private readonly string _defaultBookmaker = "Pinnacle";
         private readonly BetHelper.XYSelection _defaultXSelection = BetHelper.XYSelection.Season;
         private readonly BetHelper.XYSelection _defaultYSelection = BetHelper.XYSelection.Bookmaker;
 
         public ICommand SimulatationCommand { get; private set; }
-        public ICommand MatrixSimulationCommand { get; private set; }        
+        public ICommand MatrixSimulationCommand { get; private set; }
 
         public BetForMeViewModel() {
             SimulatationCommand = new ActionCommand(ExecuteSimulationCommand);
@@ -95,8 +97,8 @@ namespace BetForMe.ViewModels {
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
                 var result = c.Database.SqlQuery<string>(sqlListTables);
                 Championships = result.ToList<string>();
-                SelectedChampionship = Championships.First();
-            }                       
+                SelectedChampionship = Championships.Where(ch => ch.Equals(_defaultChampionship)).FirstOrDefault();
+            }
         }
 
         private void LoadSeasons() {
@@ -118,7 +120,7 @@ namespace BetForMe.ViewModels {
         private void LoadBookmakers() {
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
                 Bookmakers = c.Bookmakers.ToList<Bookmakers>();
-                SelectedBookmaker = Bookmakers.Where(b => b.Name.Equals("Interwetten")).FirstOrDefault();
+                SelectedBookmaker = Bookmakers.Where(b => b.Name.Equals(_defaultBookmaker)).FirstOrDefault();
             }
         }
 
@@ -147,7 +149,7 @@ namespace BetForMe.ViewModels {
             };
 
             sim.Simulate();
-            CurrentSimulation = sim;            
+            CurrentSimulation = sim;
 
             StatusBarText = "Simulation done";
         }
@@ -169,7 +171,7 @@ namespace BetForMe.ViewModels {
                     size = Bookmakers.Count;
                     return Bookmakers.Select(b => b.Name).ToList<string>();
                 case BetHelper.XYSelection.Odds:
-                    var listOfOdds =  _bh.GetOddsCoordinates(MinOdd, MaxOdd, 10);
+                    var listOfOdds = _bh.GetOddsCoordinates(MinOdd, MaxOdd, 10);
                     coordinates = listOfOdds;
                     size = 10;
                     return listOfOdds.Select(l => l.ToString()).ToList<string>();
@@ -212,7 +214,7 @@ namespace BetForMe.ViewModels {
             // |00 01 02 03 04 05 06
             // ------------------------> x
 
-            for(int y = 0; y < ySize; y++) { //Take y values ...
+            for (int y = 0; y < ySize; y++) { //Take y values ...
                 CurrentMatrixSimulation.Add(new ObservableCollection<Simulation>());
 
                 for (int x = 0; x < xSize; x++) { //... over x axis
