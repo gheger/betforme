@@ -84,13 +84,18 @@ namespace BetForMe.Model {
                 try {
                     int nbOdds = c.Database.SqlQuery<int>(string.Format("SELECT count({0}) FROM {1} WHERE season LIKE '{2}';", bookmakerOddsField, Championship, Season)).First();
                     _log.DebugFormat("{0} odds found for bookmaker {1} for season {2}", nbOdds, Bookmaker.Name, Season);
-                    //Okay, go ahead an do simulation
+                    //Okay, go ahead and do simulation
                 } catch (Exception ex) {
                     _log.ErrorFormat("Bookmaker field not found: {0}", bookmakerOddsField);
                     //Bookmaker does not exist! Abort simulation
                     Message = string.Format("No odds found for this bookmaker ({0})", Bookmaker.Name);
                     return;
                 }
+
+                //Get list of all played games (for this season)
+                string queryAllSeasonGames = string.Format(select + from + where + whereSeason + ";", Championship, Season);
+                var allSeasonGames = c.Database.SqlQuery<Game>(queryAllSeasonGames).ToList<Game>();
+
 
                 //Build query
                 string query = string.Format(select + from + where + whereSeason + whereMinOdd + whereMaxOdd + ";", Championship, Season, bookmakerOddsField, MinOdd, MaxOdd);
@@ -109,7 +114,7 @@ namespace BetForMe.Model {
                 foreach (var gameDay in allGamesGrouped) {
                     var dateKey = gameDay.Key;
 
-                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, allGames, OnlyTopNteams, (DateTime)dateKey);
+                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, allSeasonGames, OnlyTopNteams, (DateTime)dateKey);
 
                     foreach (var game in gameDay) {
 
