@@ -153,9 +153,9 @@
                 <RadioButton GroupName="x" Grid.Column="4" Grid.Row="7" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
                 <RadioButton GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
 
-                <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button VerticalAlignment="Bottom" Command="{Binding SimulatationCommand}" Click="ButtonSimulation_Click">Simulation</Button>
-                    <Button VerticalAlignment="Bottom" Command="{Binding MatrixSimulationCommand}" Click="ButtonMatrixSimulation_Click">Matrix simulation</Button>
+                <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Button Margin="10" Command="{Binding SimulatationCommand}" Click="ButtonSimulation_Click">Simulation</Button>
+                    <Button Margin="10" Command="{Binding MatrixSimulationCommand}" Click="ButtonMatrixSimulation_Click">Matrix simulation</Button>
                 </StackPanel>
 
             </Grid>
