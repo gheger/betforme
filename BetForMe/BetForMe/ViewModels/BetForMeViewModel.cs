@@ -145,6 +145,7 @@ namespace BetForMe.ViewModels {
                 MinOdd = MinOdd,
                 MaxOdd = MaxOdd,
                 OnlyTopNteams = OnlyTopNteams,
+                LeagueTableLimitation = LeagueTableLimitation,
                 BankrollToPlay = BankrollToPlay,
             };
 
@@ -192,6 +193,8 @@ namespace BetForMe.ViewModels {
         }
 
         private void ExecuteMatrixSimulationCommand() {
+            Mouse.SetCursor(Cursors.Wait);
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
             object xCoordinates = null;
             object yCoordinates = null;
@@ -228,6 +231,7 @@ namespace BetForMe.ViewModels {
                         MinOdd = MinOdd,
                         MaxOdd = MaxOdd,
                         OnlyTopNteams = OnlyTopNteams,
+                        LeagueTableLimitation = LeagueTableLimitation,
                         BankrollToPlay = BankrollToPlay,
                     };
 
@@ -237,13 +241,18 @@ namespace BetForMe.ViewModels {
                     //And finally set changing 'X' parameter
                     sim.SetDynamicParameter(XSelection, xCoordinates, x);
 
-                    //Excuse simulation
+                    //Execute simulation
                     sim.Simulate();
 
                     //Save simulation
                     CurrentMatrixSimulation[y].Add(sim);
                 }
             }
+
+            watch.Stop();
+            Mouse.SetCursor(Cursors.Arrow);
+
+            StatusBarText = string.Format("Matrix simulation done ({0} simulations in {1} ms)", xSize * ySize, watch.ElapsedMilliseconds);
         }
 
         #endregion Commands
@@ -341,6 +350,7 @@ namespace BetForMe.ViewModels {
         public double MinOdd { get; set; }
         public double MaxOdd { get; set; }
         public int OnlyTopNteams { get; set; }
+        public bool LeagueTableLimitation { get; set; }
         public double BankrollToPlay { get; set; }
         public IList<string> Championships { get; set; } = new List<string>();
         public IList<string> Seasons { get; set; } = new List<string>();

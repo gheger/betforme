@@ -34,7 +34,7 @@ namespace BetForMe.Model {
 
         //CSV export
         private string csvExport = string.Empty;
-        private string csvHeader = "Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway;Bankroll";
+        private string csvHeader = "GameId;Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway;Bankroll";
 
         //Commands
         public ICommand CopyGamesInClipboardCommand { get; private set; }
@@ -92,16 +92,19 @@ namespace BetForMe.Model {
                     return;
                 }
 
-                //Get list of all played games (for this season)
-                string queryAllSeasonGames = string.Format(select + from + where + whereSeason + ";", Championship, Season);
-                var allSeasonGames = c.Database.SqlQuery<Game>(queryAllSeasonGames).ToList<Game>();
-
-
                 //Build query
                 string query = string.Format(select + from + where + whereSeason + whereMinOdd + whereMaxOdd + ";", Championship, Season, bookmakerOddsField, MinOdd, MaxOdd);
 
                 var allGames = c.Database.SqlQuery<Game>(query).ToList<Game>();
                 var allGamesGrouped = allGames.GroupBy(g => g.Date);
+
+                //Way to compute the league table
+                List<Game> gamesForLeagueTable = allGames;
+                if (!LeagueTableLimitation) {
+                    //Get list of all played games (for this season)
+                    string queryAllSeasonGames = string.Format(select + from + where + whereSeason + ";", Championship, Season);
+                    gamesForLeagueTable = c.Database.SqlQuery<Game>(queryAllSeasonGames).ToList<Game>();
+                }
 
                 /* 2nd step: simulate over the full season
                  *  - With BK management (same BK for a game day)
@@ -114,7 +117,7 @@ namespace BetForMe.Model {
                 foreach (var gameDay in allGamesGrouped) {
                     var dateKey = gameDay.Key;
 
-                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, allSeasonGames, OnlyTopNteams, (DateTime)dateKey);
+                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, gamesForLeagueTable, OnlyTopNteams, (DateTime)dateKey);
 
                     foreach (var game in gameDay) {
 
@@ -158,8 +161,8 @@ namespace BetForMe.Model {
         }
 
         private void AddGameToCSVExport(Game game, BetHelper.OddType oddType, double odd, bool isWon, double bankroll) {
-            //Format: Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway
-            csvExport += oddType + ";" + odd + ";" + (isWon ? "Won" : "Lost") + ";" + game.HomeTeam + ";" + game.AwayTeam + ";" + game.FTHG + ";" + game.FTAG + ";" + bankroll + Environment.NewLine;
+            //Format: GameId;Bet;Odd;BetResult;TeamHome;TeamAway;GoalsHome;GoalsAway
+            csvExport += game.ID + ";" + oddType + ";" + odd + ";" + (isWon ? "Won" : "Lost") + ";" + game.HomeTeam + ";" + game.AwayTeam + ";" + game.FTHG + ";" + game.FTAG + ";" + bankroll + Environment.NewLine;
         }
 
         public void SetDynamicParameter(BetHelper.XYSelection selection, object coordinates, int i) {
@@ -273,6 +276,7 @@ namespace BetForMe.Model {
         public double BankrollToPlay { get; set; }
         public Bookmakers Bookmaker { get; set; }
         public int OnlyTopNteams { get; set; } //consider if > 0
+        public bool LeagueTableLimitation { get; set; }
 
         protected void OnNotifyPropertyChanged([CallerMemberName] string memberName = "") {
             if (PropertyChanged != null) {

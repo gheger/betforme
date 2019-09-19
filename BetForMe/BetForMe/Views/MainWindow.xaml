@@ -11,7 +11,7 @@
         xmlns:helpers="clr-namespace:BetForMe.Helpers"
         xmlns:views="clr-namespace:BetForMe.Views"
         Title="{x:Static resources:Resources.ApplicationTitle}"
-        Height="545" Width="1000">
+        Height="570" Width="1300">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="stTextBlockTitleStyle">
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -63,7 +63,7 @@
             <!-- **************************************************************************************************************************************************** -->
             <Grid Grid.Column="0" Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
@@ -71,6 +71,7 @@
                     <ColumnDefinition Width="1*" /> <!-- y axis -->
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -98,7 +99,7 @@
                 <ComboBox Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" ItemsSource="{Binding Bookmakers}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedBookmaker}"/>
                 
                 <TextBlock Grid.Column="0" Grid.Row="5">Odds between:</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MinOdd}">
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="5" FormatString="F2" Increment=".05" Value="{Binding MinOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
@@ -106,7 +107,7 @@
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>                
                 <TextBlock Grid.Column="2" Grid.Row="5" HorizontalAlignment="Center">and</TextBlock>                
-                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="5" FormatString="F2" Increment=".05"  Maximum="10" Value="{Binding MaxOdd}">
+                <xctk:DoubleUpDown Grid.Column="3" Grid.Row="5" FormatString="F2" Increment=".05" Value="{Binding MaxOdd}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
@@ -125,11 +126,17 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </xctk:DoubleUpDown>
+                
+                <TextBlock Grid.Column="0" Grid.Row="8">League table limitation:</TextBlock>
+                <StackPanel Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="3" Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding LeagueTableLimitation}"/>
+                    <TextBlock FontSize="10" Margin="5,0,0,0">Only games within odd range are taken</TextBlock>
+                </StackPanel>
 
-                <TextBlock Grid.Column="0" Grid.Row="8" Style="{StaticResource stTextBlockTitle2Style}" Margin="0,15,0,5">Betting settings</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="9" Style="{StaticResource stTextBlockTitle2Style}" Margin="0,15,0,5">Betting settings</TextBlock>
 
-                <TextBlock Grid.Column="0" Grid.Row="9">Bankroll to play [%]:</TextBlock>
-                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" FormatString="F2" Increment="1" Maximum="100" Value="{Binding BankrollToPlay}">
+                <TextBlock Grid.Column="0" Grid.Row="10">Bankroll to play [%]:</TextBlock>
+                <xctk:DoubleUpDown Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="3" FormatString="F2" Increment="1" Maximum="100" Value="{Binding BankrollToPlay}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="ValueChanged">
                             <i:InvokeCommandAction Command="{Binding SimulatationCommand}" />
@@ -153,7 +160,7 @@
                 <RadioButton GroupName="x" Grid.Column="4" Grid.Row="7" IsChecked="{Binding XSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
                 <RadioButton GroupName="y" Grid.Column="5" Grid.Row="7" IsChecked="{Binding YSelection, Converter={StaticResource EnumConverter}, ConverterParameter=TopTeams}"></RadioButton>
 
-                <StackPanel Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="6" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Button Margin="10" Command="{Binding SimulatationCommand}" Click="ButtonSimulation_Click">Simulation</Button>
                     <Button Margin="10" Command="{Binding MatrixSimulationCommand}" Click="ButtonMatrixSimulation_Click">Matrix simulation</Button>
                 </StackPanel>
