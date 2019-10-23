@@ -28,7 +28,8 @@ namespace BetForMe.ViewModels {
         private string _selectedChampionship;
         private string _selectedSeason;
         private Bookmakers _selectedBookmaker;
-        private BetHelper.OddType _selectedGameTypes;
+        private BetHelper.OddType _selectedGameType;
+        private BetHelper.LimitTeamsType _selectedLimitTeamsType;
         private Simulation _currentSimulation;
         private ObservableCollection<ObservableCollection<Simulation>> _currentMatrixSimulation;
         private List<string> _currentMatrixSimulationHeadersX;
@@ -37,7 +38,7 @@ namespace BetForMe.ViewModels {
         private readonly double _defaultInitialBankroll = 100.0;
         private readonly double _defaultMinOdd = 1.1;
         private readonly double _defaultMaxOdd = 1.7;
-        private readonly int _defaultOnlyTopNteams = 3;
+        private readonly int _defaultLimitTeamsN = 3;
         private readonly double _defaultBankrollToPlay = 10.0; //in percent
         private readonly string _defaultChampionship = "England";
         private readonly string _defaultBookmaker = "Pinnacle";
@@ -54,7 +55,7 @@ namespace BetForMe.ViewModels {
             MinOdd = _defaultMinOdd;
             MaxOdd = _defaultMaxOdd;
             BankrollToPlay = _defaultBankrollToPlay;
-            OnlyTopNteams = _defaultOnlyTopNteams;
+            LimitTeamsN = _defaultLimitTeamsN;
             XSelection = _defaultXSelection;
             YSelection = _defaultYSelection;
 
@@ -74,6 +75,7 @@ namespace BetForMe.ViewModels {
             LoadChampionships(); // = tables in the DB
             LoadSeasons();
             LoadGameTypes();
+            LoadLimitTeamsTypes();
             LoadBookmakers();
 
             _isLoaded = true;
@@ -116,7 +118,13 @@ namespace BetForMe.ViewModels {
             }
             SelectedGameType = GameTypes.Where(g => g.Equals(BetHelper.OddType.Home)).FirstOrDefault();
         }
-
+        private void LoadLimitTeamsTypes() {
+            foreach (BetHelper.LimitTeamsType lt in Enum.GetValues(typeof(BetHelper.LimitTeamsType))) {
+                LimitTeamsTypes.Add(lt);
+            }
+            SelectedLimitTeamsType = LimitTeamsTypes.Where(g => g.Equals(BetHelper.LimitTeamsType.Top)).FirstOrDefault();
+        }
+        
         private void LoadBookmakers() {
             using (BetForMeDBContainer c = new BetForMeDBContainer()) {
                 Bookmakers = c.Bookmakers.ToList<Bookmakers>();
@@ -144,7 +152,8 @@ namespace BetForMe.ViewModels {
                 GameTypes = SelectedGameType,
                 MinOdd = MinOdd,
                 MaxOdd = MaxOdd,
-                OnlyTopNteams = OnlyTopNteams,
+                LimitTeamsType = SelectedLimitTeamsType,
+                LimitTeamsN = LimitTeamsN,
                 LeagueTableLimitation = LeagueTableLimitation,
                 BankrollToPlay = BankrollToPlay,
             };
@@ -180,14 +189,14 @@ namespace BetForMe.ViewModels {
                     coordinates = GameTypes;
                     size = GameTypes.Count;
                     return GameTypes.Select(g => g.ToString()).ToList<string>();
-                case BetHelper.XYSelection.TopTeams:
-                    if (OnlyTopNteams == 0) {
-                        OnlyTopNteams = 20;
+                case BetHelper.XYSelection.LimitTeamsType:
+                    if (LimitTeamsN == 0) {
+                        LimitTeamsN = 20;
                     }
-                    var listTopTeams = Enumerable.Range(1, OnlyTopNteams).ToList<int>();
-                    coordinates = listTopTeams;
-                    size = OnlyTopNteams;
-                    return listTopTeams.Select(tt => tt.ToString()).ToList<string>();
+                    var listLimitTeamsN = Enumerable.Range(1, LimitTeamsN).ToList<int>();
+                    coordinates = listLimitTeamsN;
+                    size = LimitTeamsN;
+                    return listLimitTeamsN.Select(tt => tt.ToString()).ToList<string>();
             }
             return new List<string>();
         }
@@ -230,7 +239,8 @@ namespace BetForMe.ViewModels {
                         GameTypes = SelectedGameType,
                         MinOdd = MinOdd,
                         MaxOdd = MaxOdd,
-                        OnlyTopNteams = OnlyTopNteams,
+                        LimitTeamsType = SelectedLimitTeamsType,
+                        LimitTeamsN = LimitTeamsN,
                         LeagueTableLimitation = LeagueTableLimitation,
                         BankrollToPlay = BankrollToPlay,
                     };
@@ -338,10 +348,21 @@ namespace BetForMe.ViewModels {
             }
         }
         public BetHelper.OddType SelectedGameType {
-            get { return _selectedGameTypes; }
+            get { return _selectedGameType; }
             set {
-                if (_selectedGameTypes != value) {
-                    _selectedGameTypes = value;
+                if (_selectedGameType != value) {
+                    _selectedGameType = value;
+                    OnNotifyPropertyChanged();
+                    ExecuteSimulationCommand();
+                }
+            }
+        }
+
+        public BetHelper.LimitTeamsType SelectedLimitTeamsType {
+            get { return _selectedLimitTeamsType; }
+            set {
+                if (_selectedLimitTeamsType != value) {
+                    _selectedLimitTeamsType = value;
                     OnNotifyPropertyChanged();
                     ExecuteSimulationCommand();
                 }
@@ -349,12 +370,13 @@ namespace BetForMe.ViewModels {
         }
         public double MinOdd { get; set; }
         public double MaxOdd { get; set; }
-        public int OnlyTopNteams { get; set; }
+        public int LimitTeamsN { get; set; }
         public bool LeagueTableLimitation { get; set; }
         public double BankrollToPlay { get; set; }
         public IList<string> Championships { get; set; } = new List<string>();
         public IList<string> Seasons { get; set; } = new List<string>();
         public IList<BetHelper.OddType> GameTypes { get; set; } = new List<BetHelper.OddType>();
+        public IList<BetHelper.LimitTeamsType> LimitTeamsTypes { get; set; } = new List<BetHelper.LimitTeamsType>();
         public IList<Bookmakers> Bookmakers { get; set; } = new List<Bookmakers>();
         public BetHelper.XYSelection XSelection { get; set; }
         public BetHelper.XYSelection YSelection { get; set; }

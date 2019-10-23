@@ -115,22 +115,48 @@ namespace BetForMe.Model {
                 FinalBankroll = InitialBankroll;
 
                 foreach (var gameDay in allGamesGrouped) {
-                    var dateKey = gameDay.Key;
 
-                    List<string> todaysTop = _bh.GetLeagueTableTop(Championship, gamesForLeagueTable, OnlyTopNteams, (DateTime)dateKey);
+                    //Get league table for "limit teams"
+                    List<string> todaysTop = null;
+                    if (LimitTeamsType == BetHelper.LimitTeamsType.Top) { //yes, with table top
+                        todaysTop = _bh.GetLeagueTableTop(Championship, gamesForLeagueTable, LimitTeamsN, (DateTime)gameDay.Key);
+                    } else if (LimitTeamsType == BetHelper.LimitTeamsType.Diff) {
+                        todaysTop = _bh.GetLeagueTableTop(Championship, gamesForLeagueTable, 20, (DateTime)gameDay.Key);
+                    }
 
+                    //Simulation a game day
                     foreach (var game in gameDay) {
 
                         //Get the odd and on which game the bet must be placed
                         BetHelper.OddType whichOdd = BetHelper.OddType.Both;
                         double odd = _bh.GetOddForBookmaker(game, Bookmaker.Prefix, GameTypes, out whichOdd);
 
-                        //If OnlyTopNteams param is set, limit games to these teams
-                        if (OnlyTopNteams > 0 && todaysTop.Count > 0 &&
-                            (whichOdd == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
-                            whichOdd == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
+                        // Keep this game or continue ? **********************************************************
+                        
+                        if (LimitTeamsType == BetHelper.LimitTeamsType.Top) { //yes, with table top
+                            //If LimitTeamsN param is set, limit games to these teams
+                            if (LimitTeamsN > 0 && todaysTop.Count > 0 && 
+                                    (whichOdd == BetHelper.OddType.Home && !todaysTop.Contains(game.HomeTeam) ||
+                                    whichOdd == BetHelper.OddType.Away && !todaysTop.Contains(game.AwayTeam))) {
                                 continue;
+                            }
+                        } else if(LimitTeamsType == BetHelper.LimitTeamsType.Diff) { //yes, with table diff
+                            int tableDiff = 0;
+                            if (whichOdd == BetHelper.OddType.Home) {
+                                tableDiff = todaysTop.IndexOf(game.AwayTeam) - todaysTop.IndexOf(game.HomeTeam);
+                                _log.InfoFormat("Home game: {0}-{1}, table diff: {2}", game.HomeTeam, game.AwayTeam, tableDiff);
+                            } else if (whichOdd == BetHelper.OddType.Away) {
+                                tableDiff = todaysTop.IndexOf(game.HomeTeam) - todaysTop.IndexOf(game.AwayTeam);
+                                _log.InfoFormat("Away game: {0}-{1}, table diff: {2}", game.AwayTeam, game.HomeTeam, tableDiff);
+                            }
+
+                            if (tableDiff > 0 && tableDiff <= LimitTeamsN) {
+                                _log.InfoFormat("Drop game from simulation ({0}<{1})", tableDiff, LimitTeamsN);
+                                continue;
+                            }
                         }
+                        // ***************************************************************************
+
 
                         //Update stats
                         TotalBets++;
@@ -183,8 +209,8 @@ namespace BetForMe.Model {
                 case BetHelper.XYSelection.GameType:
                     GameTypes = ((List<BetHelper.OddType>)coordinates)[i];
                     break;
-                case BetHelper.XYSelection.TopTeams:
-                    OnlyTopNteams = ((List<int>)coordinates)[i];
+                case BetHelper.XYSelection.LimitTeamsType:
+                    LimitTeamsN = ((List<int>)coordinates)[i];
                     break;
             }
         }
@@ -270,12 +296,13 @@ namespace BetForMe.Model {
         public string Championship { get; set; }
         public string Season { get; set; }
         public BetHelper.OddType GameTypes { get; set; }
+        public BetHelper.LimitTeamsType LimitTeamsType { get; set; }
         public double MinOdd { get; set; }
         public double MaxOdd { get; set; }
         public double InitialBankroll { get; set; }
         public double BankrollToPlay { get; set; }
         public Bookmakers Bookmaker { get; set; }
-        public int OnlyTopNteams { get; set; } //consider if > 0
+        public int LimitTeamsN { get; set; } //consider if > 0
         public bool LeagueTableLimitation { get; set; }
 
         protected void OnNotifyPropertyChanged([CallerMemberName] string memberName = "") {

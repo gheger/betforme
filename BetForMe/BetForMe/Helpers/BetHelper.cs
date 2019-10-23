@@ -15,13 +15,18 @@ namespace BetForMe.Helpers {
             Both = 'B'
         }
 
+        public enum LimitTeamsType {
+            Top,
+            Diff
+        }
+
         public enum XYSelection {
             Championship,
             Season,
             Bookmaker,
             Odds,
             GameType,
-            TopTeams
+            LimitTeamsType
         }
 
         public double CalculateBet(double stake, double odd, bool isBetWon = true) {
@@ -64,10 +69,8 @@ namespace BetForMe.Helpers {
 
         /**
          * Calculates the league table at a certain point of time.
-         * Return the top N times
-         * 
-         * TODO GHE
-         * Possible improvement: at the start of the season, return the teams with the lowest odds about winning the championship
+         * Return the top N teams
+         *
          */
         public List<string> GetLeagueTableTop(string championship, List<Game> allChampGames, int top, DateTime untilDate) {
 
