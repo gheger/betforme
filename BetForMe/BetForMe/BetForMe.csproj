@@ -109,6 +109,9 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Model\Game.cs" />
+    <Compile Include="Model\Germany.cs">
+      <DependentUpon>BetForMeDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Spain.cs">
       <DependentUpon>BetForMeDB.tt</DependentUpon>
     </Compile>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=C:\git\BetForMe\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BetForMeDB.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\dev\betforme\data\BetForMeDB.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bookmakers">
           <Key>
             <PropertyRef Name="ID" />
@@ -29,6 +29,80 @@
           <Property Name="HTAG" Type="integer" />
           <Property Name="HTR" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="Referee" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HS" Type="integer" />
+          <Property Name="AS_" Type="integer" />
+          <Property Name="HST" Type="integer" />
+          <Property Name="AST" Type="integer" />
+          <Property Name="HF" Type="integer" />
+          <Property Name="AF" Type="integer" />
+          <Property Name="HC" Type="integer" />
+          <Property Name="AC" Type="integer" />
+          <Property Name="HY" Type="integer" />
+          <Property Name="AY" Type="integer" />
+          <Property Name="HR" Type="integer" />
+          <Property Name="AR" Type="integer" />
+          <Property Name="B365H" Type="real" />
+          <Property Name="B365D" Type="real" />
+          <Property Name="B365A" Type="real" />
+          <Property Name="BWH" Type="real" />
+          <Property Name="BWD" Type="real" />
+          <Property Name="BWA" Type="real" />
+          <Property Name="IWH" Type="real" />
+          <Property Name="IWD" Type="real" />
+          <Property Name="IWA" Type="real" />
+          <Property Name="LBH" Type="real" />
+          <Property Name="LBD" Type="real" />
+          <Property Name="LBA" Type="real" />
+          <Property Name="PSH" Type="real" />
+          <Property Name="PSD" Type="real" />
+          <Property Name="PSA" Type="real" />
+          <Property Name="WHH" Type="real" />
+          <Property Name="WHD" Type="real" />
+          <Property Name="WHA" Type="real" />
+          <Property Name="SJH" Type="real" />
+          <Property Name="SJD" Type="real" />
+          <Property Name="SJA" Type="real" />
+          <Property Name="VCH" Type="real" />
+          <Property Name="VCD" Type="real" />
+          <Property Name="VCA" Type="real" />
+          <Property Name="Bb1X2" Type="integer" />
+          <Property Name="BbMxH" Type="real" />
+          <Property Name="BbAvH" Type="real" />
+          <Property Name="BbMxD" Type="real" />
+          <Property Name="BbAvD" Type="real" />
+          <Property Name="BbMxA" Type="real" />
+          <Property Name="BbAvA" Type="real" />
+          <Property Name="BbOU" Type="integer" />
+          <Property Name="BbMxGreaterThan2_5" Type="real" />
+          <Property Name="BbAvGreaterThan2_5" Type="real" />
+          <Property Name="BbMxLowerThan2_5" Type="real" />
+          <Property Name="BbAvLowerThan2_5" Type="real" />
+          <Property Name="BbAH" Type="integer" />
+          <Property Name="BbAHh" Type="real" />
+          <Property Name="BbMxAHH" Type="real" />
+          <Property Name="BbAvAHH" Type="real" />
+          <Property Name="BbMxAHA" Type="real" />
+          <Property Name="BbAvAHA" Type="real" />
+          <Property Name="PSCH" Type="real" />
+          <Property Name="PSCD" Type="real" />
+          <Property Name="PSCA" Type="real" />
+          <Property Name="ID" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Germany">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Season" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="HomeTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="AwayTeam" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="FTHG" Type="integer" />
+          <Property Name="FTAG" Type="integer" />
+          <Property Name="FTR" Type="nvarchar" MaxLength="2147483647" />
+          <Property Name="HTHG" Type="integer" />
+          <Property Name="HTAG" Type="integer" />
+          <Property Name="HTR" Type="nvarchar" MaxLength="2147483647" />
           <Property Name="HS" Type="integer" />
           <Property Name="AS_" Type="integer" />
           <Property Name="HST" Type="integer" />
@@ -174,6 +248,7 @@
         <EntityContainer Name="BetForMeDBStoreContainer">
           <EntitySet Name="Bookmakers" EntityType="Self.Bookmakers" store:Type="Tables" />
           <EntitySet Name="England" EntityType="Self.England" store:Type="Tables" />
+          <EntitySet Name="Germany" EntityType="Self.Germany" store:Type="Tables" />
           <EntitySet Name="PreseasonOdds" EntityType="Self.PreseasonOdds" store:Type="Tables" />
           <EntitySet Name="Spain" EntityType="Self.Spain" store:Type="Tables" />
         </EntityContainer>
@@ -186,6 +261,7 @@
           <EntitySet Name="Bookmakers" EntityType="BetForMeDB.Bookmakers" />
           <EntitySet Name="PreseasonOdds" EntityType="BetForMeDB.PreseasonOdds" />
           <EntitySet Name="Spain" EntityType="BetForMeDB.Spain" />
+          <EntitySet Name="Germany" EntityType="BetForMeDB.Germany" />
         </EntityContainer>
         <EntityType Name="England">
           <Key>
@@ -280,6 +356,80 @@
           <Property Name="TeamsList" Type="String" Nullable="false" MaxLength="2147483647" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Spain">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="Div" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Season" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="HomeTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="AwayTeam" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="FTHG" Type="Int64" />
+          <Property Name="FTAG" Type="Int64" />
+          <Property Name="FTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HTHG" Type="Int64" />
+          <Property Name="HTAG" Type="Int64" />
+          <Property Name="HTR" Type="String" MaxLength="2147483647" FixedLength="false" Unicode="true" />
+          <Property Name="HS" Type="Int64" />
+          <Property Name="AS_" Type="Int64" />
+          <Property Name="HST" Type="Int64" />
+          <Property Name="AST" Type="Int64" />
+          <Property Name="HF" Type="Int64" />
+          <Property Name="AF" Type="Int64" />
+          <Property Name="HC" Type="Int64" />
+          <Property Name="AC" Type="Int64" />
+          <Property Name="HY" Type="Int64" />
+          <Property Name="AY" Type="Int64" />
+          <Property Name="HR" Type="Int64" />
+          <Property Name="AR" Type="Int64" />
+          <Property Name="B365H" Type="Double" />
+          <Property Name="B365D" Type="Double" />
+          <Property Name="B365A" Type="Double" />
+          <Property Name="BWH" Type="Double" />
+          <Property Name="BWD" Type="Double" />
+          <Property Name="BWA" Type="Double" />
+          <Property Name="IWH" Type="Double" />
+          <Property Name="IWD" Type="Double" />
+          <Property Name="IWA" Type="Double" />
+          <Property Name="LBH" Type="Double" />
+          <Property Name="LBD" Type="Double" />
+          <Property Name="LBA" Type="Double" />
+          <Property Name="PSH" Type="Double" />
+          <Property Name="PSD" Type="Double" />
+          <Property Name="PSA" Type="Double" />
+          <Property Name="WHH" Type="Double" />
+          <Property Name="WHD" Type="Double" />
+          <Property Name="WHA" Type="Double" />
+          <Property Name="SJH" Type="Double" />
+          <Property Name="SJD" Type="Double" />
+          <Property Name="SJA" Type="Double" />
+          <Property Name="VCH" Type="Double" />
+          <Property Name="VCD" Type="Double" />
+          <Property Name="VCA" Type="Double" />
+          <Property Name="Bb1X2" Type="Int64" />
+          <Property Name="BbMxH" Type="Double" />
+          <Property Name="BbAvH" Type="Double" />
+          <Property Name="BbMxD" Type="Double" />
+          <Property Name="BbAvD" Type="Double" />
+          <Property Name="BbMxA" Type="Double" />
+          <Property Name="BbAvA" Type="Double" />
+          <Property Name="BbOU" Type="Int64" />
+          <Property Name="BbMxGreaterThan2_5" Type="Double" />
+          <Property Name="BbAvGreaterThan2_5" Type="Double" />
+          <Property Name="BbMxLowerThan2_5" Type="Double" />
+          <Property Name="BbAvLowerThan2_5" Type="Double" />
+          <Property Name="BbAH" Type="Int64" />
+          <Property Name="BbAHh" Type="Double" />
+          <Property Name="BbMxAHH" Type="Double" />
+          <Property Name="BbAvAHH" Type="Double" />
+          <Property Name="BbMxAHA" Type="Double" />
+          <Property Name="BbAvAHA" Type="Double" />
+          <Property Name="PSCH" Type="Double" />
+          <Property Name="PSCD" Type="Double" />
+          <Property Name="PSCA" Type="Double" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Germany">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -459,6 +609,81 @@
           <EntitySetMapping Name="Spain">
             <EntityTypeMapping TypeName="BetForMeDB.Spain">
               <MappingFragment StoreEntitySet="Spain">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="PSCA" ColumnName="PSCA" />
+                <ScalarProperty Name="PSCD" ColumnName="PSCD" />
+                <ScalarProperty Name="PSCH" ColumnName="PSCH" />
+                <ScalarProperty Name="BbAvAHA" ColumnName="BbAvAHA" />
+                <ScalarProperty Name="BbMxAHA" ColumnName="BbMxAHA" />
+                <ScalarProperty Name="BbAvAHH" ColumnName="BbAvAHH" />
+                <ScalarProperty Name="BbMxAHH" ColumnName="BbMxAHH" />
+                <ScalarProperty Name="BbAHh" ColumnName="BbAHh" />
+                <ScalarProperty Name="BbAH" ColumnName="BbAH" />
+                <ScalarProperty Name="BbAvLowerThan2_5" ColumnName="BbAvLowerThan2_5" />
+                <ScalarProperty Name="BbMxLowerThan2_5" ColumnName="BbMxLowerThan2_5" />
+                <ScalarProperty Name="BbAvGreaterThan2_5" ColumnName="BbAvGreaterThan2_5" />
+                <ScalarProperty Name="BbMxGreaterThan2_5" ColumnName="BbMxGreaterThan2_5" />
+                <ScalarProperty Name="BbOU" ColumnName="BbOU" />
+                <ScalarProperty Name="BbAvA" ColumnName="BbAvA" />
+                <ScalarProperty Name="BbMxA" ColumnName="BbMxA" />
+                <ScalarProperty Name="BbAvD" ColumnName="BbAvD" />
+                <ScalarProperty Name="BbMxD" ColumnName="BbMxD" />
+                <ScalarProperty Name="BbAvH" ColumnName="BbAvH" />
+                <ScalarProperty Name="BbMxH" ColumnName="BbMxH" />
+                <ScalarProperty Name="Bb1X2" ColumnName="Bb1X2" />
+                <ScalarProperty Name="VCA" ColumnName="VCA" />
+                <ScalarProperty Name="VCD" ColumnName="VCD" />
+                <ScalarProperty Name="VCH" ColumnName="VCH" />
+                <ScalarProperty Name="SJA" ColumnName="SJA" />
+                <ScalarProperty Name="SJD" ColumnName="SJD" />
+                <ScalarProperty Name="SJH" ColumnName="SJH" />
+                <ScalarProperty Name="WHA" ColumnName="WHA" />
+                <ScalarProperty Name="WHD" ColumnName="WHD" />
+                <ScalarProperty Name="WHH" ColumnName="WHH" />
+                <ScalarProperty Name="PSA" ColumnName="PSA" />
+                <ScalarProperty Name="PSD" ColumnName="PSD" />
+                <ScalarProperty Name="PSH" ColumnName="PSH" />
+                <ScalarProperty Name="LBA" ColumnName="LBA" />
+                <ScalarProperty Name="LBD" ColumnName="LBD" />
+                <ScalarProperty Name="LBH" ColumnName="LBH" />
+                <ScalarProperty Name="IWA" ColumnName="IWA" />
+                <ScalarProperty Name="IWD" ColumnName="IWD" />
+                <ScalarProperty Name="IWH" ColumnName="IWH" />
+                <ScalarProperty Name="BWA" ColumnName="BWA" />
+                <ScalarProperty Name="BWD" ColumnName="BWD" />
+                <ScalarProperty Name="BWH" ColumnName="BWH" />
+                <ScalarProperty Name="B365A" ColumnName="B365A" />
+                <ScalarProperty Name="B365D" ColumnName="B365D" />
+                <ScalarProperty Name="B365H" ColumnName="B365H" />
+                <ScalarProperty Name="AR" ColumnName="AR" />
+                <ScalarProperty Name="HR" ColumnName="HR" />
+                <ScalarProperty Name="AY" ColumnName="AY" />
+                <ScalarProperty Name="HY" ColumnName="HY" />
+                <ScalarProperty Name="AC" ColumnName="AC" />
+                <ScalarProperty Name="HC" ColumnName="HC" />
+                <ScalarProperty Name="AF" ColumnName="AF" />
+                <ScalarProperty Name="HF" ColumnName="HF" />
+                <ScalarProperty Name="AST" ColumnName="AST" />
+                <ScalarProperty Name="HST" ColumnName="HST" />
+                <ScalarProperty Name="AS_" ColumnName="AS_" />
+                <ScalarProperty Name="HS" ColumnName="HS" />
+                <ScalarProperty Name="HTR" ColumnName="HTR" />
+                <ScalarProperty Name="HTAG" ColumnName="HTAG" />
+                <ScalarProperty Name="HTHG" ColumnName="HTHG" />
+                <ScalarProperty Name="FTR" ColumnName="FTR" />
+                <ScalarProperty Name="FTAG" ColumnName="FTAG" />
+                <ScalarProperty Name="FTHG" ColumnName="FTHG" />
+                <ScalarProperty Name="AwayTeam" ColumnName="AwayTeam" />
+                <ScalarProperty Name="HomeTeam" ColumnName="HomeTeam" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+                <ScalarProperty Name="Div" ColumnName="Div" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Germany">
+            <EntityTypeMapping TypeName="BetForMeDB.Germany">
+              <MappingFragment StoreEntitySet="Germany">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="PSCA" ColumnName="PSCA" />
                 <ScalarProperty Name="PSCD" ColumnName="PSCD" />

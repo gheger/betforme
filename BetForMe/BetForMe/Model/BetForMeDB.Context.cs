@@ -29,5 +29,6 @@ namespace BetForMe.Model
         public virtual DbSet<Bookmakers> Bookmakers { get; set; }
         public virtual DbSet<PreseasonOdds> PreseasonOdds { get; set; }
         public virtual DbSet<Spain> Spain { get; set; }
+        public virtual DbSet<Germany> Germany { get; set; }
     }
 }
