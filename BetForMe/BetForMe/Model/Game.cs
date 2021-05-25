@@ -54,19 +54,19 @@ namespace BetForMe.Model {
         public Nullable<double> VCH { get; set; }
         public Nullable<double> VCD { get; set; }
         public Nullable<double> VCA { get; set; }
-        public Nullable<long> Bb1X2 { get; set; }
+        public Nullable<double> Bb1X2 { get; set; }
         public Nullable<double> BbMxH { get; set; }
         public Nullable<double> BbAvH { get; set; }
         public Nullable<double> BbMxD { get; set; }
         public Nullable<double> BbAvD { get; set; }
         public Nullable<double> BbMxA { get; set; }
         public Nullable<double> BbAvA { get; set; }
-        public Nullable<long> BbOU { get; set; }
+        public Nullable<double> BbOU { get; set; }
         public Nullable<double> BbMxGreaterThan2_5 { get; set; }
         public Nullable<double> BbAvGreaterThan2_5 { get; set; }
         public Nullable<double> BbMxLowerThan2_5 { get; set; }
         public Nullable<double> BbAvLowerThan2_5 { get; set; }
-        public Nullable<long> BbAH { get; set; }
+        public Nullable<double> BbAH { get; set; }
         public Nullable<double> BbAHh { get; set; }
         public Nullable<double> BbMxAHH { get; set; }
         public Nullable<double> BbAvAHH { get; set; }
