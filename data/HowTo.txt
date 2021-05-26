@@ -1,0 +1,103 @@
+----------------------------------------------------
+-----------  How to update de database   -----------
+----------------------------------------------------
+Author: Garry Heger, garry@swisclima.ch
+Version: 1.0 (26.05.2021)
+
+
+1. Download the last CSV files from https://www.football-data.co.uk/
+   --> 4 files for all the championships (England, France, Spain, Germany)
+2. Open each "<Country>_for_DB_import.xlsx"
+3. Add a new tab with the new downloaded row data
+4. Report data to the "All" tab. Watch out the columns, it may change
+	- Column B (Season) is not in the raw data, add it manually
+	- Colume C (Date): check that the cell format is "yyyy-mm-dd" (of "aaaa-mm-jj" in french)
+	- Last column (ID): must be empty
+5. When done, save the XSLX copy and save a new copy in CSV
+6. Open the SQLite DB file (BetForMeDB.db)
+    - There is a tool in "Tools\DB Browser for SQLite"
+7. Import the newly created CSV files into new tables
+    - Table names are: England, France, Spain, Germany
+8. Once imported, adapt the table structure accordingly (the auto-import does not work well)
+    - "Date" field                  --> data type = DATE
+	- Fields from "HS" to "AR"      --> data type = INTEGER
+	- Fields from "B365H" to "PSCA" --> data type = REAL
+	- "Id" field                    --> data type = INTEGER, check PK (primary key) and AI (auto-increment)
+9. Save, it's done !
+
+
+
+-------------------------
+Table structure example:
+
+CREATE TABLE "<Country>" (
+	"Div"	TEXT,
+	"Season"	TEXT,
+	"Date"	DATE,                 <-- CHANGE ME to DATE
+	"HomeTeam"	TEXT,
+	"AwayTeam"	TEXT,
+	"FTHG"	INTEGER,
+	"FTAG"	INTEGER,
+	"FTR"	TEXT,
+	"HTHG"	INTEGER,
+	"HTAG"	INTEGER,
+	"HTR"	TEXT,
+	"HS"	INTEGER,              <-- CHANGE ME to INTEGER(and following lines as well)
+	"AS_"	INTEGER,
+	"HST"	INTEGER,
+	"AST"	INTEGER,
+	"HF"	INTEGER,
+	"AF"	INTEGER,
+	"HC"	INTEGER,
+	"AC"	INTEGER,
+	"HY"	INTEGER,
+	"AY"	INTEGER,
+	"HR"	INTEGER,
+	"AR"	INTEGER,              <-- CHANGE ME to REAL (and following lines as well)
+	"B365H"	REAL,
+	"B365D"	REAL,
+	"B365A"	REAL,
+	"BWH"	REAL,
+	"BWD"	REAL,
+	"BWA"	REAL,
+	"IWH"	REAL,
+	"IWD"	REAL,
+	"IWA"	REAL,
+	"LBH"	REAL,
+	"LBD"	REAL,
+	"LBA"	REAL,
+	"PSH"	REAL,
+	"PSD"	REAL,
+	"PSA"	REAL,
+	"WHH"	REAL,
+	"WHD"	REAL,
+	"WHA"	REAL,
+	"SJH"	REAL,
+	"SJD"	REAL,
+	"SJA"	REAL,
+	"VCH"	REAL,
+	"VCD"	REAL,
+	"VCA"	REAL,
+	"Bb1X2"	REAL,
+	"BbMxH"	REAL,
+	"BbAvH"	REAL,
+	"BbMxD"	REAL,
+	"BbAvD"	REAL,
+	"BbMxA"	REAL,
+	"BbAvA"	REAL,
+	"BbOU"	REAL,
+	"BbMxGreaterThan2_5"	REAL,
+	"BbAvGreaterThan2_5"	REAL,
+	"BbMxLowerThan2_5"	REAL,
+	"BbAvLowerThan2_5"	REAL,
+	"BbAH"	REAL,
+	"BbAHh"	REAL,
+	"BbMxAHH"	REAL,
+	"BbAvAHH"	REAL,
+	"BbMxAHA"	REAL,
+	"BbAvAHA"	REAL,
+	"PSCH"	REAL,
+	"PSCD"	REAL,
+	"PSCA"	REAL,
+	"ID"	INTEGER PRIMARY KEY AUTOINCREMENT         <-- CHANGE ME to INTEGER PRIMARY KEY AUTOINCREMENT 
+);
