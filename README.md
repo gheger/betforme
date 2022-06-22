@@ -1,6 +1,6 @@
 # BetForMe
 
-betforme is an app that simulates football bets according to past event. The goal is to find patterns for winning money with sport betting.
+betforme is an app that simulates football bets according to past events. The goal is to find patterns for winning money with sport betting.
 
 The technology stack used is the application is:
 
